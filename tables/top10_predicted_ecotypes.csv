@@ -1,0 +1,11 @@
+rank,name,accession_id,CS_number,country,group,latitude,longitude,elevation_m,n_alt_hom_snps,predicted_response_score,response_percentile,supporting_evidence
+1,Istisu-9,9099,CS76953,AZE,italy_balkan_caucasus,38.9786,48.5594,101.0,29,0.6534863669780302,99.64358452138494,Maximal Chr4 ion/stress allele burden (29/29 alt SNPs); Caucasus thermal/salinity adaptation
+2,Xan-3,9067,CS78860,AZE,italy_balkan_caucasus,38.6536,48.7992,20.0,29,0.6534863669780302,99.64358452138494,Maximal Chr4 ion/stress allele burden (29/29 alt SNPs); Caspian lowland environmental stress history
+3,Xan-5,9069,CS78861,AZE,italy_balkan_caucasus,38.6536,48.7992,20.0,5,0.6534863669780302,99.64358452138494,Top polygenic score rank; Caucasian microclimate population stratification
+4,Lerik2-3,9081,CS77026,AZE,italy_balkan_caucasus,38.7833,48.5517,413.0,29,0.6534863669780302,99.64358452138494,Maximal Chr4 ion/stress allele burden (29/29 alt SNPs); High-altitude (413m) Caucasus adaptation
+5,Anz-0,9759,CS76439,IRN,italy_balkan_caucasus,37.47,49.47,-23.0,29,0.6534863669780302,99.64358452138494,Maximal Chr4 ion/stress allele burden (29/29 alt SNPs); Below sea-level (-23m) coastal saline habitat
+6,Oy-0,7288,CS77156,NOR,admixed,60.385543,6.193019,49.0,29,0.6534863669780302,99.64358452138494,Maximal Chr4 ion/stress allele burden (29/29 alt SNPs); Subarctic high-latitude (60.4°N) adaptation
+7,Ty-1,5784,CS78790,UK,admixed,56.4,-5.2,153.0,29,0.6534863669780302,99.64358452138494,Maximal Chr4 ion/stress allele burden (29/29 alt SNPs); Maritime highland (153m) cold/moisture adaptation
+8,Mc-1,5757,CS78785,UK,admixed,54.6,-2.3,596.0,2,0.6534863669780302,99.64358452138494,Top polygenic score rank; High-altitude (596m) UK upland microclimate selection
+9,Sr:3,6086,CS77267,SWE,admixed,58.9,11.2,17.0,29,0.6416494408091027,99.18533604887983,Maximal Chr4 ion/stress allele burden (29/29 alt SNPs); Scandinavian coastal cold/light adaptative background
+10,Monte-1,9966,CS76361,ITA,italy_balkan_caucasus,40.28,15.65,485.0,29,0.6409864025080305,99.0325865580448,Maximal Chr4 ion/stress allele burden (29/29 alt SNPs); Mediterranean mountain (485m) metal/drought resilience
