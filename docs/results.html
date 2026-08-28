@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Interactive Results - Arabidopsis GWAS-Spaceflight Integration</title>
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/main.js" defer></script>
+</head>
+<body>
+  <header>
+    <h1>Interactive Analytical Results</h1>
+    <p>Explore meta-analysis outputs, GWAS gene overlap, machine learning metrics, knowledge graph, and extended geographic & locus analyses.</p>
+  </header>
+
+  <nav>
+    <a href="index.html">Overview</a>
+    <a href="results.html" class="active">Interactive Results</a>
+    <a href="figures.html">Figure Browser</a>
+    <a href="methods.html">Methods & Pipeline</a>
+    <a href="data.html">Data Downloads</a>
+  </nav>
+
+  <div class="container">
+    <div class="card">
+      <div class="tab-buttons">
+        <button class="tab-btn active" data-tab="tab-meta">Meta-Analysis</button>
+        <button class="tab-btn" data-tab="tab-gwas">GWAS Overlap</button>
+        <button class="tab-btn" data-tab="tab-ml">Machine Learning</button>
+        <button class="tab-btn" data-tab="tab-geo">Geographic Clines</button>
+        <button class="tab-btn" data-tab="tab-chr4">Chr4 Shared Locus (Q1, Q5, Q8)</button>
+        <button class="tab-btn" data-tab="tab-extended">Extended Window & Power (Q2, Q4, Q6)</button>
+      </div>
+
+      <!-- Tab 1: Meta-Analysis -->
+      <div class="tab-content active" id="tab-meta">
+        <h2>Cross-Study Meta-Analysis of Spaceflight Response</h2>
+        <p>Across 17 NASA GeneLab spaceflight transcriptomics studies (22 ecotype/genotype comparisons; 534,547 gene comparisons), cross-study meta-analysis identified <strong>2,550 consensus significant spaceflight DEGs</strong> (1,291 upregulated, 1,259 downregulated; FDR &lt; 0.05 in both Fisher combined p-value and REML random-effects meta-analysis).</p>
+        <div class="grid">
+          <img src="assets/fig2_meta_analysis.png" alt="Meta-Analysis Volcano & GO" style="width:100%; border-radius:6px;">
+          <img src="assets/fig19_photorespiration_heatmap.png" alt="Photorespiration Heatmap" style="width:100%; border-radius:6px;">
+        </div>
+      </div>
+
+      <!-- Tab 2: GWAS Overlap -->
+      <div class="tab-content" id="tab-gwas">
+        <h2>AraGWAS Catalog Overlap & Trait Enrichment</h2>
+        <p>Integrating 462 AraGWAS studies (1,523,262 Bonferroni-significant associations across 279 phenotypes) revealed that GWAS candidate genes are strongly enriched among spaceflight DEGs (<strong>763 overlap genes, OR = 4.23, p = 4.45e-102</strong>). 90 GWAS phenotypes were significantly enriched, led by climate adaptation and ion homeostasis traits.</p>
+        <div class="grid">
+          <img src="assets/fig3_integration.png" alt="GWAS Integration" style="width:100%; border-radius:6px;">
+          <img src="assets/fig18_ion_enrichment.png" alt="Ion Trait Enrichment" style="width:100%; border-radius:6px;">
+        </div>
+      </div>
+
+      <!-- Tab 3: Machine Learning -->
+      <div class="tab-content" id="tab-ml">
+        <h2>Machine Learning & Ecotype Prediction</h2>
+        <p>A nested 5-fold cross-validated Random Forest classifier discriminated spaceflight-responsive genes with near-perfect accuracy (<strong>AUC = 0.999, Average Precision = 0.986</strong>). Direction concordance across studies (0.188) and Fisher combined p-value (0.149) were top features.</p>
+        <div class="grid">
+          <img src="assets/fig4_ml_results.png" alt="ML ROC and Feature Importance" style="width:100%; border-radius:6px;">
+          <img src="assets/fig13_ecotype_prediction_real.png" alt="Ecotype Scores" style="width:100%; border-radius:6px;">
+        </div>
+      </div>
+
+      <!-- Tab 4: Geographic Clines -->
+      <div class="tab-content" id="tab-geo">
+        <h2>Geographic Distribution & Latitudinal Gradients</h2>
+        <p>Mapping 982 accessions from the 1001 Genomes Project demonstrated a significant latitudinal gradient (Spearman &rho; = -0.125, p = 8.97e-5), while elevation showed a weak non-significant trend (&rho; = -0.047). Population group demographic history explained 34.9% of predicted score variance.</p>
+        <div class="grid">
+          <img src="assets/fig22_clinal_latitude_gradient.png" alt="Clinal Latitude Gradient" style="width:100%; border-radius:6px;">
+          <img src="assets/fig24_europe_score_heatmap.png" alt="Europe Score Heatmap" style="width:100%; border-radius:6px;">
+          <img src="assets/fig26_score_geographic_surface.png" alt="Global Surface Map" style="width:100%; border-radius:6px;">
+          <img src="assets/fig27_population_violin.png" alt="Population Violin Plots" style="width:100%; border-radius:6px;">
+        </div>
+      </div>
+
+      <!-- Tab 5: Chr4 Shared Locus -->
+      <div class="tab-content" id="tab-chr4">
+        <h2>Chromosome 4 Shared Locus Analysis (Q1, Q5, Q8)</h2>
+        <p>29 of 31 top spaceflight-predictive SNPs (93.5%) map to a narrow ~14 kb locus on Chromosome 4 (positions 1,257,343–1,271,408; spanning <code>AT4G02820</code> to <code>AT4G02860</code>). Linkage disequilibrium analysis indicates an effective number of independent SNPs <em>M<sub>e</sub></em> = 4.2 out of 29 SNPs, confirming that strong LD inflation limits discriminative power across single-locus polygenic scores.</p>
+        <div class="grid">
+          <img src="assets/fig20_chr4_locus_diagram.png" alt="Chr4 Locus Diagram" style="width:100%; border-radius:6px;">
+          <img src="assets/fig23_ion_manhattan_chr4.png" alt="Chr4 Ion Manhattan" style="width:100%; border-radius:6px;">
+          <img src="assets/fig25_ld_heatmap_chr4.png" alt="Chr4 LD Heatmap" style="width:100%; border-radius:6px;">
+        </div>
+      </div>
+
+      <!-- Tab 6: Extended Window & Power -->
+      <div class="tab-content" id="tab-extended">
+        <h2>Extended Window Polygenic Scoring & Statistical Power (Q2, Q4, Q6)</h2>
+        <p>Expanding polygenic risk scores across wider genomic windows (all 763 GWAS overlap genes across Chromosomes 1–5) maintains the strong latitudinal gradient while smoothing local LD redundancy. Statistical power calculations highlight that while small sample size (n = 4 ecotypes) limits direct elevation-transcriptomic correlations, the full 982-accession dataset provides &gt;99% power for clinal detection.</p>
+        <div class="grid">
+          <img src="assets/fig21_extended_altitude_analysis.png" alt="Extended Window Correlations" style="width:100%; border-radius:6px;">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <p>&copy; 2026 Richard Barker &bull; Integrated Arabidopsis GWAS-Spaceflight Project</p>
+  </footer>
+</body>
+</html>

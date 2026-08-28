@@ -1,0 +1,50 @@
+{
+  "title": "Arabidopsis GWAS-Spaceflight Integration: Predicting Ecotype-Specific Spaceflight Responses",
+  "description": "Integration of the AraGWAS catalog with NASA GeneLab Arabidopsis spaceflight transcriptomics data, using machine learning and knowledge graph approaches to predict ecotype-specific spaceflight responses.",
+  "creators": [
+    {
+      "name": "Barker, Richard",
+      "affiliation": "Phylo",
+      "orcid": "0000-0002-4525-3341"
+    }
+  ],
+  "keywords": [
+    "Arabidopsis thaliana",
+    "GWAS",
+    "spaceflight",
+    "transcriptomics",
+    "NASA GeneLab",
+    "AraGWAS",
+    "machine learning",
+    "random forest",
+    "knowledge graph",
+    "ecotype prediction",
+    "differential expression",
+    "meta-analysis",
+    "GO enrichment"
+  ],
+  "license": "MIT",
+  "access_right": "open",
+  "upload_type": "software",
+  "language": "eng",
+  "communities": [
+    {"identifier": "nasa-geneLab"}
+  ],
+  "related_identifiers": [
+    {
+      "identifier": "10.1038/s41526-023-00247-6",
+      "relation": "isDerivedFrom",
+      "resource_type": "publication-article"
+    },
+    {
+      "identifier": "10.1093/nar/gkx954",
+      "relation": "isDerivedFrom",
+      "resource_type": "publication-article"
+    },
+    {
+      "identifier": "10.1016/j.cell.2016.05.063",
+      "relation": "isDerivedFrom",
+      "resource_type": "publication-article"
+    }
+  ]
+}

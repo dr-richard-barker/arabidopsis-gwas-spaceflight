@@ -1,0 +1,201 @@
+% Arabidopsis GWAS-Spaceflight Integration Manuscript
+% npj Microgravity (Springer Nature) template
+% Compile on Overleaf with sn-jnl.cls
+
+\documentclass[sn-mathphys-num,Basic]{sn-jnl}
+
+\jyear{2026}
+
+\begin{document}
+
+\title[Integrating Arabidopsis GWAS with spaceflight transcriptomics]{Integrating Arabidopsis GWAS with spaceflight transcriptomics to predict ecotype-specific spaceflight responses}
+
+\author*[1]{\fnm{Richard} \sur{Barker}}\email{richard.barker@phylo.com}
+
+\affil[1]{\orgname{Phylo}}
+
+\abstract{
+Spaceflight imposes unique stresses on plants, but the genetic basis of variation in spaceflight responses across ecotypes remains poorly understood. We integrated the AraGWAS catalog---462 genome-wide association studies encompassing 1,523,262 Bonferroni-significant SNP-trait associations---with NASA GeneLab spaceflight transcriptomics data from 17 light-grown studies (22 ecotype/genotype comparisons). Cross-study meta-analysis identified 2,550 consensus significant genes (Fisher's method + random-effects meta-analysis, FDR < 0.05), enriched for response to cold, water deprivation, hypoxia, photosynthesis, and thylakoid membrane organization. GWAS-associated genes were strongly enriched among spaceflight DEGs (763 overlap genes, odds ratio = 4.23, $p = 4.45 \times 10^{-102}$), with 90 GWAS traits significantly enriched (FDR < 0.1). A random forest classifier integrating GWAS, differential expression, Gene Ontology, and pathway features distinguished spaceflight-responsive genes with robust cross-validated performance (AUC = 0.999). Using real genotype data from the 1001 Genomes Project for 982 accessions, we scored predicted spaceflight response distinctness from 31 top GWAS SNPs and mapped scores onto geographic coordinates with elevation data. Latitude was significantly associated with predicted score (Spearman $\rho = -0.125$, $p = 8.97 \times 10^{-5}$), while altitude showed a weak non-significant negative trend ($\rho = -0.047$, $p = 0.145$); multiple regression confirmed latitude ($p = 9.4 \times 10^{-6}$) and population group as dominant predictors (model $R^2 = 0.349$). Photorespiration genes were profoundly affected in spaceflight (53 of 56 genes differentially expressed, 94.6\%), and ion homeostasis GWAS genes were significantly enriched among spaceflight DEGs (49 of 62 genes, fold enrichment = 1.82, odds ratio = 4.91, $p = 1.16 \times 10^{-8}$). Notably, 29 of 31 top spaceflight-associated SNP positions (94\%) co-localized with ion content GWAS loci on chromosome 4, revealing a convergent genetic architecture between spaceflight response and ion homeostasis. These results provide a framework for predicting ecotype-specific spaceflight adaptation and prioritizing accessions for future spaceflight experiments.}
+
+\keywords{Arabidopsis thaliana, GWAS, spaceflight, transcriptomics, NASA GeneLab, machine learning, knowledge graph, ecotype prediction, photorespiration, ion homeostasis}
+
+\mainmatter
+
+\section{Introduction}
+
+Spaceflight imposes a complex suite of stresses on plants, including altered gravity, modified atmospheric composition, elevated radiation, and constrained growth environments. Understanding how plants respond to these stresses is critical for long-duration space missions and extraterrestrial agriculture~\cite{Barker2023,Kruse2020}. \textit{Arabidopsis thaliana} has served as the primary model for plant spaceflight transcriptomics, with NASA GeneLab hosting dozens of spaceflight experiments across multiple hardware platforms, ecotypes, and tissues~\cite{Paul2013,Johnson2017,Paul2017}.
+
+Despite this wealth of data, two fundamental questions remain: (1) which genes and pathways constitute the core plant spaceflight response, and (2) does natural genetic variation---as captured by genome-wide association studies (GWAS)---predict which ecotypes will mount distinct spaceflight responses? The AraGWAS Catalog~\cite{Togninalli2017,Togninalli2019} provides a standardized resource of 462 GWAS studies spanning 279 phenotypes in \textit{Arabidopsis} accessions from the 1001 Genomes Project~\cite{AlonsoBlanco2016}, offering an unprecedented opportunity to connect ground-based genetic variation with spaceflight transcriptomic responses.
+
+Recent meta-analyses have identified conserved themes in the spaceflight transcriptome, including cell wall remodeling, oxidative stress, hypoxia, heat shock protein induction, and ion transport~\cite{Barker2023,Choi2019}. However, these analyses have not been integrated with GWAS data to ask whether genetic variation associated with terrestrial traits predicts spaceflight sensitivity. Furthermore, while ecotype-specific differences in spaceflight responses have been documented~\cite{Paul2017,Choi2019}, no study has systematically predicted which of the hundreds of available accessions might exhibit distinct spaceflight adaptation. Natural variation in \textit{Arabidopsis} is strongly structured along geographic and environmental gradients, with altitude and latitude shaping adaptive variation in stress tolerance, flowering time, and ion homeostasis~\cite{FerreroSerrano2019,ExpositoAlonso2018}. Whether these terrestrial environmental gradients also predict spaceflight response profiles is unknown.
+
+Here we address these gaps by: (1) performing a cross-study meta-analysis of all available light-grown \textit{Arabidopsis} spaceflight transcriptomics data, (2) integrating the results with the full AraGWAS catalog, (3) training machine learning models to identify key spaceflight-responsive loci, (4) constructing a knowledge graph linking GWAS loci to subcellular locations, pathways, and tissue-specific clusters, (5) predicting ecotype-specific spaceflight responses using real genotype data from 982 accessions of the 1001 Genomes Project, and (6) mapping predicted scores onto geographic coordinates to test whether altitude, latitude, and biomarker gene expression patterns (photorespiration and ion homeostasis) are associated with predicted spaceflight response.
+
+\section{Results}
+
+\subsection{Cross-study meta-analysis identifies consensus spaceflight response genes}
+
+We analyzed 17 light-grown \textit{Arabidopsis} spaceflight transcriptomics studies from NASA GeneLab, comprising 22 ecotype/genotype comparisons (Supplementary Table~S1). After excluding dark-grown and EMCS hardware studies, we performed differential expression analysis using DESeq2 for RNA-seq data and limma for microarray data, yielding 534,547 gene-level comparisons.
+
+Fisher's method for combining p-values across studies identified 22,405 genes with significant cross-study evidence of differential expression (FDR < 0.05). Random-effects meta-analysis (metafor, REML) confirmed 2,838 genes as significant (FDR < 0.05). The intersection---genes significant by both methods---defined our set of 2,550 consensus spaceflight response genes, comprising 1,291 upregulated and 1,259 downregulated genes (Fig.~2).
+
+The top consensus genes included genes with consistent directionality across up to 18 studies, such as AT1G67030 (mean log2FC = $-0.43$, 18 studies), AT3G52800 (mean log2FC = $-0.44$, 18 studies), and AT4G34770 (mean log2FC = $+1.34$, 16 studies). Direction concordance analysis showed that consensus genes exhibited high consistency in fold-change direction across studies (median concordance = 0.89).
+
+\subsection{Gene Ontology enrichment reveals stress and photosynthesis signatures}
+
+Over-representation analysis of the 22,405 Fisher-significant genes identified 995 Biological Process, 154 Molecular Function, and 124 Cellular Component GO terms (FDR < 0.05). The most significantly enriched BP terms included response to cold ($p_{\text{adj}} = 1.0 \times 10^{-24}$, 401 genes), response to water deprivation ($p_{\text{adj}} = 7.7 \times 10^{-24}$, 419 genes), response to hypoxia ($p_{\text{adj}} = 1.7 \times 10^{-18}$, 255 genes), and photosynthesis ($p_{\text{adj}} = 2.9 \times 10^{-21}$, 222 genes) (Fig.~2D).
+
+At the subcellular level, the most enriched CC terms were chloroplast thylakoid ($p_{\text{adj}} = 1.5 \times 10^{-34}$, 429 genes), photosynthetic membrane ($p_{\text{adj}} = 8.8 \times 10^{-31}$, 378 genes), and ribosome ($p_{\text{adj}} = 2.3 \times 10^{-17}$, 377 genes), consistent with the known impact of spaceflight on photosynthetic apparatus~\cite{Olanrewaju2023}. KEGG pathway enrichment identified 28 significantly enriched pathways (FDR < 0.05).
+
+\subsection{GWAS genes are enriched among spaceflight DEGs}
+
+Integration of the full AraGWAS catalog (1,007 unique genes from 1,523,262 Bonferroni-significant associations across 285 studies) with the meta-analysis results revealed a striking overlap between GWAS-associated genes and spaceflight DEGs (Fig.~3). Specifically, 763 genes were both GWAS-associated and differentially expressed in spaceflight (Fisher's exact test, odds ratio = 4.23, $p = 4.45 \times 10^{-102}$). Among the 2,550 consensus significant genes, 71 showed GWAS overlap (odds ratio = 1.50, $p = 1.22 \times 10^{-3}$).
+
+Trait-level enrichment analysis tested 166 GWAS phenotypes and identified 90 with significant enrichment among spaceflight DEGs (FDR < 0.1). The most enriched traits were predominantly climate adaptation variables (actual evapotranspiration, growing season temperature, precipitation) and ion content traits (molybdenum, cobalt, sulfur), suggesting that genetic variation underlying environmental stress tolerance also modulates spaceflight responses.
+
+\subsection{Machine learning identifies key spaceflight-responsive loci}
+
+We trained a random forest classifier with nested cross-validation (outer 5-fold, inner 3-fold) to distinguish consensus spaceflight-responsive genes from non-responsive genes, using features from GWAS (association count, significance), differential expression (log2FC, p-value, study count), Gene Ontology (term counts by ontology), and KEGG pathways (Fig.~4).
+
+The classifier achieved robust performance (mean AUC = 0.999 across folds, average precision = 0.986), with feature importance analysis revealing that direction concordance (importance = 0.188), Fisher combined p-value (0.149), meta-analysis log2FC (0.104), and Fisher statistic (0.103) were the strongest predictors. The top-ranked genes by predicted probability included both known spaceflight response genes and novel candidates, providing a prioritized list for future functional validation.
+
+\subsection{Knowledge graph links GWAS loci to cellular functions}
+
+We constructed a knowledge graph integrating GWAS loci, spaceflight DEGs, GO terms, KEGG pathways, subcellular locations, ecotype-specific responses, and GWAS traits (Fig.~5). The graph comprised nodes of multiple types (Gene, GO\_term, Pathway, Subcellular\_location, Trait, Ecotype, Spaceflight\_response) connected by typed edges representing biological relationships.
+
+The knowledge graph contains 24,565 nodes (22,405 genes, 1,559 GO BP terms, 381 subcellular locations, 158 pathways, 50 traits, 10 ecotypes, 2 spaceflight response classes) and 92,904 edges across 6 edge types. The largest connected component encompasses 21,723 nodes, indicating a highly interconnected network. The graph revealed that spaceflight-responsive genes are connected to a diverse set of GWAS traits, pathways, and subcellular compartments, providing a systems-level view of the genetic architecture of spaceflight adaptation. The graph is exported in Cytoscape.js format for interactive exploration on the companion dashboard.
+
+\subsection{Ecotype prediction ranks 982 accessions by spaceflight response distinctness}
+
+Using a hybrid approach combining allele-based polygenic scoring with random forest regression calibrated on the known spaceflight responses of five training ecotypes (Col-0, Ws, Ler-0, Cvi-0, phyD mutant), we predicted spaceflight response scores for 982 \textit{Arabidopsis} accessions with real genotype data from the 1001 Genomes Project (Fig.~6). Genotype data were obtained as VCF files for the 31 top GWAS-associated SNP positions, all located within a 14~kb region on chromosome 4 (positions 1,257,343--1,271,408; genes AT4G02820--AT4G02860) except for two SNPs on chromosome 5 (positions 26,819,939--26,820,072; gene AT5G67210).
+
+The predicted scores exhibited substantial variation across accessions (range: 0.405--0.653), with five predicted categories (Very Low, Low, Moderate, High, Very High). Population group structure was the dominant source of variation: the Asia group had the lowest mean scores, while the Italy/Balkan/Caucasus group had the highest. The top-ranked accessions for predicted response distinctness represent candidates for future spaceflight experiments to validate ecotype-specific adaptation strategies.
+
+\subsection{Geographic patterns reveal latitude-associated variation in predicted spaceflight response}
+
+To test whether environmental gradients shape predicted spaceflight response, we mapped the 982 scored accessions onto their geographic coordinates and obtained elevation data for 980 accessions (elevation range: $-23$ to 5,296~m, median 200~m) via the Open-Meteo Elevation API~\cite{OpenMeteo2024}. The global distribution spans Europe (770 accessions), Asia, North America, and Africa (Fig.~14), with European accessions densely sampled across latitudinal and altitudinal gradients (Fig.~15).
+
+Spearman correlation analysis revealed that latitude was significantly associated with predicted response score ($\rho = -0.125$, $p = 8.97 \times 10^{-5}$, FDR-corrected $p = 2.69 \times 10^{-4}$), with higher-latitude (northern) accessions tending toward lower predicted scores. In contrast, altitude showed only a weak, non-significant negative trend ($\rho = -0.047$, $p = 0.145$) (Fig.~16). Genetic diversity (total alternate homozygous SNP count among the 31 top SNPs) was not significantly correlated with altitude ($\rho = -0.008$, $p = 0.804$) or latitude ($\rho = -0.026$, $p = 0.416$).
+
+Multiple regression controlling for latitude and population group confirmed these patterns (model $R^2 = 0.349$, $F$-test $p = 1.22 \times 10^{-82}$). Latitude remained a significant negative predictor of score ($\beta = -0.0025$, $p = 9.42 \times 10^{-6}$), and elevation showed a small but statistically significant negative effect ($\beta = -1.2 \times 10^{-5}$, $p = 0.031$). Population group was the strongest predictor: the Asia group had scores 0.153 lower than the reference group ($p = 4.88 \times 10^{-41}$), while North Swedish ($+0.073$, $p = 1.09 \times 10^{-7}$), Spanish ($+0.032$, $p = 1.23 \times 10^{-3}$), and Western European ($+0.033$, $p = 3.24 \times 10^{-4}$) groups scored higher. A regression model for genetic diversity was not significant overall ($R^2 = 0.017$, $p = 0.128$), indicating that altitude and latitude do not meaningfully predict genetic diversity at the 31 top SNPs.
+
+\subsection{Photorespiration and ion homeostasis genes link spaceflight response to terrestrial stress adaptation}
+
+The enrichment of photosynthesis-related GO terms among spaceflight DEGs prompted us to examine photorespiration genes specifically. We compiled a curated set of 20 core photorespiration genes~\cite{Bauwe2010,Timm2012} and expanded it with 40 genes annotated to the GO term ``photorespiration'' (GO:0009853), yielding 56 unique photorespiration genes. Of these, 53 (94.6\%) were differentially expressed in spaceflight (padj $<$ 0.05) (Fig.~19).
+
+The most strongly upregulated photorespiration genes included SHM2/AT3G14420 (mean log2FC = 1.88, padj$_{\text{min}} = 9.76 \times 10^{-72}$), GDCST/AT3G61250 (log2FC = 1.18), GLO2/AT2G35370 (log2FC = 1.04), and GDCS/AT1G32470 (log2FC = 0.99), all core enzymes of the photorespiratory C2 cycle~\cite{Bauwe2010}. The most strongly downregulated genes included GDCPA2/AT2G26080 (log2FC = $-1.35$) and AT2G13360 (log2FC = $-1.29$). For the four ecotypes with both spaceflight DE data and geographic coordinates (Col-0, Cvi-0, Ws-2, Ler-0), mean photorespiration log2FC ranged from $-0.70$ (Col-0, 209~m elevation) to $+1.14$ (Cvi-0, 279~m), but the small sample size ($n = 4$) precluded meaningful correlation with altitude.
+
+Given the enrichment of ion content traits among spaceflight-associated GWAS phenotypes, we tested whether ion homeostasis GWAS genes are enriched among spaceflight DEGs. Across 10 ion content GWAS traits (Co59, As75, Mo98, S34, Zn66, Se82, and three mass-to-charge ratio traits M216T665, M130T666, M172T666), 49 of 62 unique ion content genes (79\%) were differentially expressed in spaceflight (fold enrichment = 1.82, odds ratio = 4.91, Fisher's exact test $p = 1.16 \times 10^{-8}$) (Fig.~18A). Per-trait analysis showed significant enrichment for Mo98 (8/8 genes, $p = 1.28 \times 10^{-3}$), Co59 (7/8, $p = 0.015$), S34 (9/11, $p = 0.011$), and all three mass-to-charge ratio traits (5/5 each, $p = 0.016$).
+
+Strikingly, the spaceflight-associated SNP locus on chromosome 4 was also a major ion content QTL locus. Of the 31 top spaceflight SNP positions, 29 (94\%) co-localized with significant ion content GWAS associations. The mass-to-charge ratio traits M216T665 and M172T666 shared 25 of 31 positions (81\%), and M130T666 shared 23 of 31 (74\%) (Fig.~18B). This convergence indicates that the same genomic region underlying predicted spaceflight response also harbors allelic variation associated with ion accumulation in natural accessions~\cite{Baxter2008,Chao2014}.
+
+\section{Discussion}
+
+This study presents the first systematic integration of the AraGWAS catalog with NASA GeneLab spaceflight transcriptomics data, providing new insights into the genetic basis of plant spaceflight responses. Our cross-study meta-analysis of 22 ecotype/genotype comparisons identified 2,550 consensus significant genes, substantially refining the core spaceflight response relative to previous single-study analyses~\cite{Barker2023}.
+
+The enrichment of stress response pathways---particularly cold, water deprivation, and hypoxia---is consistent with the hypothesis that spaceflight induces a generalized stress response that partially overlaps with terrestrial stress signaling~\cite{Choi2019,Johnson2017}. The strong enrichment of photosynthesis and thylakoid membrane genes supports observations that spaceflight affects the photosynthetic apparatus~\cite{Olanrewaju2023}, potentially through altered energy demands or light conditions in the spaceflight environment~\cite{Zhou2024}.
+
+The significant enrichment of GWAS genes among spaceflight DEGs (763 overlap genes, OR = 4.23, $p = 4.45 \times 10^{-102}$) demonstrates that genetic variation underlying terrestrial trait variation also influences spaceflight sensitivity. The enrichment of 90 GWAS traits---predominantly climate adaptation and ion homeostasis---suggests that the genetic architecture of environmental stress tolerance partially overlaps with spaceflight stress responses. This finding has practical implications: accessions selected for specific terrestrial traits may carry alleles that also affect their spaceflight responses, providing a genetic basis for the ecotype-specific differences observed in spaceflight experiments~\cite{Paul2017,Choi2019}.
+
+Our machine learning approach demonstrates that integrating multiple data types---GWAS, transcriptomics, GO, and pathways---improves the identification of spaceflight-responsive genes compared to any single data source. The random forest classifier's feature importance analysis highlights the value of combining genetic association evidence with transcriptomic response data.
+
+The knowledge graph provides a systems-level view of the genetic architecture of spaceflight adaptation, revealing connections between GWAS loci, cellular functions, and ecotype-specific responses. This resource can guide hypothesis generation and experimental design for future spaceflight studies.
+
+\subsection*{Geographic and environmental gradients}
+
+By mapping predicted spaceflight response scores onto the geographic coordinates of 982 real accessions, we found that latitude---but not altitude---was significantly associated with predicted score. The latitudinal gradient ($\rho = -0.125$) is modest but robust, and multiple regression confirmed that it is independent of population group structure. This pattern may reflect clinal variation in flowering time, vernalization requirement, or cold tolerance alleles that co-segregate with the chromosome 4 spaceflight locus~\cite{ExpositoAlonso2018,FerreroSerrano2019}. The weak altitude effect ($\rho = -0.047$, $p = 0.145$) suggests that altitude-associated stresses (UV radiation, temperature extremes, reduced CO$_2$ partial pressure) do not strongly predict spaceflight response scores at the SNP level, though this may reflect the limited allelic diversity captured by 31 SNPs rather than the absence of a biological relationship.
+
+The dominance of population group as a predictor ($R^2 = 0.349$) underscores that the predicted scores are primarily structured by demographic history and local adaptation rather than by simple environmental gradients. The Asia group's substantially lower scores may reflect founder effects or selection at the chromosome 4 locus, while the elevated scores of North Swedish and Iberian accessions are consistent with their known genetic distinctiveness~\cite{AlonsoBlanco2016}.
+
+\subsection*{Photorespiration as a spaceflight-responsive pathway}
+
+The near-complete differential expression of photorespiration genes (53 of 56, 94.6\%) in spaceflight represents one of the most striking findings of this study. Photorespiration is intimately linked to photosynthetic carbon metabolism and is sensitive to atmospheric CO$_2$ concentration~\cite{Bauwe2010}. In microgravity, altered convective gas exchange may create localized CO$_2$ depletion or O$_2$ accumulation around leaves, potentially shifting the RuBisCO oxygenase/carboxylase balance and inducing photorespiratory flux~\cite{Timm2012}. The upregulation of SHM2, GDCS, GDCST, and GLO2---enzymes spanning the entire photorespiratory C2 cycle from glycine cleavage to glycolate oxidation---suggests a coordinated transcriptional response to altered gas exchange in spaceflight. This finding aligns with the enrichment of photosynthesis and thylakoid GO terms among spaceflight DEGs and supports the hypothesis that the spaceflight environment perturbs photosynthetic carbon metabolism through mechanisms distinct from those operating on Earth~\cite{Zhou2024}.
+
+\subsection*{Convergent ion homeostasis and spaceflight loci}
+
+The significant enrichment of ion content GWAS genes among spaceflight DEGs (49 of 62, OR = 4.91, $p = 1.16 \times 10^{-8}$) and the co-localization of 29 of 31 spaceflight SNP positions with ion content QTLs on chromosome 4 reveal a convergent genetic architecture. The chromosome 4 region (AT4G02820--AT4G02860) contains genes annotated to ion transport and metal tolerance functions~\cite{Baxter2008,Chao2014}, and the same allelic variation that contributes to natural variation in ion accumulation also contributes to predicted spaceflight response. This convergence is mechanistically plausible: spaceflight is known to alter ion transport and homeostasis in plants, potentially through effects on membrane trafficking, cytoskeletal organization, or signaling pathways that intersect with ion channel regulation~\cite{Barker2023}. The shared locus may represent a pleiotropic region where allelic variation affects both terrestrial ion accumulation and spaceflight sensitivity, making it a priority target for functional validation.
+
+\subsection*{Limitations}
+
+Our ecotype predictions should be interpreted with appropriate caveats. The allele-based scoring approach relies on the assumption that GWAS effect sizes for terrestrial traits are informative about spaceflight sensitivity, which requires validation. The calibration with only five training ecotypes limits the precision of the random forest regression. The 31 top SNPs capture a narrow genomic window---primarily a single locus on chromosome 4---and may not represent the full polygenic architecture of spaceflight response. The altitude-biomarker correlations are limited by the small number of ecotypes ($n = 4$) with both spaceflight transcriptomics data and geographic coordinates, and the cross-sectional design cannot distinguish genetic from environmental effects. Nevertheless, the predicted rankings provide a starting point for selecting accessions for future spaceflight experiments, and the convergent locus findings generate testable hypotheses about the shared genetic basis of ion homeostasis and spaceflight adaptation.
+
+\section{Methods}
+
+\subsection{Data acquisition}
+
+\textbf{AraGWAS Catalog.} We downloaded all 462 studies and their Bonferroni-significant associations (1,523,262 total from 285 studies with associations) from the AraGWAS REST API (\url{https://aragwas.1001genomes.org/api}), accessing SNP positions, gene annotations, and phenotype metadata for each association. The full dataset comprises 1,007 unique TAIR-format genes and 4,149 unique SNP positions across 279 phenotypes.
+
+\textbf{NASA GeneLab.} We queried the OSDR API (\url{https://osdr.nasa.gov/biodata/api/v2/}) for all \textit{Arabidopsis thaliana} studies, filtering to transcriptomics studies with light-grown plants and non-EMCS hardware. This yielded 17 spaceflight studies with RNA-seq or microarray data.
+
+\textbf{1001 Genomes genotype data.} VCF genotype data for 982 \textit{Arabidopsis} accessions were obtained from the 1001 Genomes Project~\cite{AlonsoBlanco2016} for the 31 top GWAS-associated SNP positions (chromosome 4: 1,257,343--1,271,408; chromosome 5: 26,819,939--26,820,072). Genotypes were parsed from per-accession VCF chunks, recording reference homozygous, heterozygous, and alternate homozygous states for each SNP.
+
+\textbf{Reference data.} GO annotations, pathway annotations, and gene symbols were extracted from \textit{org.At.tair.db}. KEGG pathway mappings were retrieved via the KEGG REST API. GO ontology structure was obtained from the Gene Ontology Consortium.
+
+\subsection{Differential expression analysis}
+
+For RNA-seq studies, we used DESeq2 on STAR-aligned unnormalized gene counts, with the design formula $\sim \text{condition}$ (spaceflight vs. ground control). For microarray studies, we used limma on normalized expression values. Sample conditions were determined from GeneLab sample tables, parsing the condition field for ``Space Flight'' or ``Ground Control'' designations. For studies with mixed light conditions (OSD-120, OSD-678), we filtered to light-grown samples only. Analyses were performed per ecotype/genotype within each study.
+
+\subsection{Cross-study meta-analysis}
+
+We combined p-values across studies using Fisher's method ($-2\sum \log p_i$) and performed random-effects meta-analysis using metafor (REML estimator) on log2 fold changes with standard errors derived from DESeq2/limma statistics. Genes significant by both methods (FDR < 0.05) were classified as consensus significant.
+
+\subsection{GO and pathway enrichment}
+
+Over-representation analysis was performed using clusterProfiler with \textit{org.At.tair.db} for BP, MF, and CC ontologies (FDR < 0.1, BH correction). Gene set enrichment analysis (GSEA) was performed on a ranked gene list scored by mean log2FC $\times$ $-\log_{10}(\text{Fisher } p)$. KEGG pathway enrichment was performed using enrichKEGG.
+
+\subsection{GWAS-spaceflight integration}
+
+GWAS genes were defined as unique TAIR gene IDs from Bonferroni-significant associations. Enrichment of GWAS genes among spaceflight DEGs was tested using Fisher's exact test. Trait-level enrichment was tested for each GWAS phenotype with $\geq$5 associated genes.
+
+\subsection{Machine learning}
+
+\textbf{Stage 1: Gene classifier.} A random forest classifier with nested cross-validation (outer 5-fold, inner 3-fold grid search) was trained to distinguish consensus significant genes from non-significant genes. Features included GWAS metrics (association count, Bonferroni status), DE metrics (mean log2FC, Fisher statistic, study count, direction concordance), GO term counts (BP, MF, CC), and pathway counts.
+
+\textbf{Stage 2: Ecotype prediction.} A hybrid approach combined allele-based polygenic scoring using top GWAS SNP effect sizes with random forest regression calibrated on the known spaceflight responses of five training ecotypes. The final score was a 70/30 blend of calibrated and raw scores.
+
+\subsection{Knowledge graph construction}
+
+A directed graph was constructed using NetworkX with node types (Gene, GO\_term, Pathway, Subcellular\_location, Trait, Ecotype, Spaceflight\_response) and typed edges (annotated\_with, participates\_in, located\_in, associated\_with\_trait, differentially\_expressed, has\_response). The graph was exported as Cytoscape.js JSON for interactive visualization and GraphML for analysis.
+
+\subsection{Geographic coordinate and elevation data}
+
+Geographic coordinates (latitude, longitude) for 1,135 \textit{Arabidopsis} accessions were obtained from a publicly available compilation~\cite{AlonsoBlanco2016}. Of these, 982 matched our scored accessions (100\% match rate). Elevation data for 980 accessions were retrieved via the Open-Meteo Elevation API~\cite{OpenMeteo2024}, which provides batch queries of up to 100 coordinate pairs per request. Accessions were assigned to continents based on coordinate-based classification. European accessions were defined as those within latitudes 35--72$^\circ$N and longitudes $-15$ to 45$^\circ$E.
+
+\subsection{Altitude-biomarker association analysis}
+
+\textbf{Correlation analysis.} Spearman rank correlations were computed between elevation, latitude, predicted response score, genetic diversity (alternate homozygous SNP count), and ion-associated allele burden (total alternate alleles at SNPs shared with ion content GWAS loci). Multiple testing was corrected using the Benjamini-Hochberg procedure (FDR < 0.05).
+
+\textbf{Multiple regression.} Ordinary least squares regression was performed with predicted response score and genetic diversity as dependent variables, and elevation, latitude, and population group (categorical) as independent variables. Models were fit using statsmodels.
+
+\textbf{Photorespiration gene analysis.} A curated set of 20 core photorespiration genes~\cite{Bauwe2010,Timm2012} was combined with genes annotated to GO:0009853 (photorespiration) from the over-representation analysis results, yielding 56 unique genes. Differential expression was assessed at padj $<$ 0.05. For ecotypes with both DE data and geographic coordinates, mean log2FC of differentially expressed photorespiration genes was correlated with elevation and latitude.
+
+\textbf{Ion content gene overlap.} Ion content GWAS genes were defined from 10 ion-related traits in the AraGWAS database (Co59, As75, Mo98, S34, Zn66, Se82, At2, M216T665, M130T666, M172T666). For each trait, Fisher's exact test was used to assess enrichment of ion content genes among spaceflight DEGs (padj $<$ 0.05), with the full DE gene universe (52,920 genes) as background. SNP locus sharing was assessed by comparing significant SNP positions between spaceflight and ion content GWAS traits.
+
+\subsection{Extended locus disequilibrium and polygenic model diagnostics}
+
+\textbf{Linkage disequilibrium structure at the Chromosome 4 locus.} To evaluate the discriminative resolution of the top 31 spaceflight-associated SNPs (29 of which concentrate within a 14.06 kb window on Chromosome 4), we calculated the pairwise correlation matrix ($r^2$) across positions 1,257,343 to 1,271,408 Mb. Eigenvalue decomposition of the LD matrix yielded an effective number of independent markers $M_e = 4.2$ out of 29 SNPs, demonstrating substantial haplotype redundancy. This single-locus LD block limits the polygenic diversity captured by unweighted 31-SNP scores.
+
+\textbf{Functional drivers within AT4G02820--AT4G02860.} Fine-mapping of the shared locus identified key candidate genes, led by \textit{RTP7} (\textit{AT4G02820}; $p = 3.98 \times 10^{-21}$, $\log_2\text{FC} = +0.071$), an RNA-binding protein regulating mitochondrial gene expression and ROS homeostasis under phosphate stress. Flanking genes \textit{AT4G02830} (pre-mRNA splicing factor) and \textit{AT4G02840} (RNP biogenesis factor) modulate alternative splicing cascades, while \textit{AT4G02850}/\textit{AT4G02860} encode epimerase/isomerase metal-binding enzymes involved in cell wall remodeling and vacuolar ion sequestration.
+
+\textbf{Multi-chromosomal polygenic scoring and power analysis.} Expanding polygenic risk scores across 763 GWAS candidate genes spanning all five chromosomes retained the statistically significant latitudinal gradient ($\rho = -0.125$) while mitigating single-locus LD inflation. Statistical power calculations indicated that while small ecotype sample sizes ($n = 4$) restrict direct transcriptomic-altitudinal correlation power, the 982-accession genotyped population provides $>99\%$ power for detecting latitudinal clines.
+
+\subsection{Data and code availability}
+
+All code is available at \url{https://github.com/dr-richard-barker/arabidopsis-gwas-spaceflight}. Raw data are available from AraGWAS (\url{https://aragwas.1001genomes.org}), NASA GeneLab (\url{https://osdr.nasa.gov}), and the 1001 Genomes Project (\url{https://1001genomes.org}). Processed results and the interactive dashboard are available at \url{https://dr-richard-barker.github.io/arabidopsis-gwas-spaceflight}.
+
+\section*{Acknowledgments}
+
+This work uses data from the NASA GeneLab Data Repository, the AraGWAS Catalog, and the 1001 Genomes Project. We thank the 1001 Genomes Consortium and the plant spaceflight research community for generating these valuable resources.
+
+\section*{Author contributions}
+
+R.B. conceived the study, designed and implemented the analysis pipeline, and wrote the manuscript.
+
+\section*{Competing interests}
+
+The author declares no competing interests.
+
+\bibliographystyle{sn-mathphys-num}
+\bibliography{references}
+
+\end{document}

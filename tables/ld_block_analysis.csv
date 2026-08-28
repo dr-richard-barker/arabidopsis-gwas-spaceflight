@@ -1,0 +1,2 @@
+total_snps_chr4,genomic_window_kb,effective_independent_snps_Me,ld_redundancy_ratio,consequence
+29,14.06,23.79,1.22,Strong LD linkage inflates unweighted allele counts and restricts genetic diversity sampling to a single haplotype block.

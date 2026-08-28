@@ -1,0 +1,33 @@
+cff-version: 1.2.0
+message: "If you use this software or data, please cite it as below."
+title: "Arabidopsis GWAS-Spaceflight Integration: Predicting Ecotype-Specific Spaceflight Responses"
+type: software
+authors:
+  - given-names: Richard
+    family-names: Barker
+    orcid: "https://orcid.org/0000-0002-4525-3341"
+    affiliation: "Phylo"
+keywords:
+  - Arabidopsis thaliana
+  - GWAS
+  - spaceflight
+  - transcriptomics
+  - NASA GeneLab
+  - AraGWAS
+  - machine learning
+  - knowledge graph
+  - ecotype prediction
+license: MIT
+repository-code: "https://github.com/dr-richard-barker/arabidopsis-gwas-spaceflight"
+version: "1.0.0"
+date-released: "2026-08-25"
+preferred-citation:
+  type: article
+  title: "Integrating Arabidopsis GWAS with spaceflight transcriptomics to predict ecotype-specific responses"
+  authors:
+    - given-names: Richard
+      family-names: Barker
+      orcid: "https://orcid.org/0000-0002-4525-3341"
+  journal: "npj Microgravity"
+  year: 2026
+  doi: "10.1038/s41526-026-XXXXX-X"

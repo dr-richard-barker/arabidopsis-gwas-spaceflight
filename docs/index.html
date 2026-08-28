@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Arabidopsis GWAS-Spaceflight Integration</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header>
+    <h1>Arabidopsis GWAS-Spaceflight Integration</h1>
+    <p>Predicting Ecotype-Specific Spaceflight Responses by Integrating the AraGWAS Catalog with NASA GeneLab Spaceflight Transcriptomics Data</p>
+  </header>
+
+  <nav>
+    <a href="index.html" class="active">Overview</a>
+    <a href="results.html">Interactive Results</a>
+    <a href="figures.html">Figure Browser</a>
+    <a href="methods.html">Methods & Pipeline</a>
+    <a href="data.html">Data Downloads</a>
+  </nav>
+
+  <div class="container">
+    <div class="card">
+      <h2>Executive Summary</h2>
+      <p>Spaceflight imposes complex abiotic stresses on plants, including microgravity, altered atmospheric gas exchange, and space radiation. However, the extent to which natural terrestrial genetic variation influences spaceflight adaptation remains poorly understood.</p>
+      <p>This project integrates <strong>462 GWAS studies</strong> from the AraGWAS catalog (1,523,262 Bonferroni-significant SNP-trait associations across 2,029 accessions) with <strong>17 NASA GeneLab spaceflight transcriptomics studies</strong> (22 ecotype/genotype comparisons). Through cross-study meta-analysis, machine learning, and knowledge graph modeling, we demonstrate that natural variation underlying terrestrial climate adaptation and ion homeostasis strongly predicts spaceflight response sensitivity.</p>
+    </div>
+
+    <div class="grid">
+      <div class="stat-box">
+        <div class="number">2,550</div>
+        <div class="label">Consensus Spaceflight DEGs</div>
+      </div>
+      <div class="stat-box">
+        <div class="number">763</div>
+        <div class="label">GWAS-Spaceflight Overlap Genes</div>
+      </div>
+      <div class="stat-box">
+        <div class="number">4.23x</div>
+        <div class="label">GWAS Enrichment Fold (p = 4.45e-102)</div>
+      </div>
+      <div class="stat-box">
+        <div class="number">982</div>
+        <div class="label">Accessions Genotyped & Scored</div>
+      </div>
+      <div class="stat-box">
+        <div class="number">0.999</div>
+        <div class="label">Machine Learning Classifier AUC</div>
+      </div>
+      <div class="stat-box">
+        <div class="number">94.6%</div>
+        <div class="label">Photorespiration Pathway DE Genes</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Key Scientific Discoveries</h2>
+      <ul>
+        <li><strong>Convergent Chromosome 4 Locus (AT4G02820–AT4G02860):</strong> 29 of 31 top spaceflight-associated SNP positions (93.5%) co-localize with ion content GWAS QTLs on Chromosome 4, revealing a shared genetic architecture between terrestrial ion transport and microgravity adaptation.</li>
+        <li><strong>Photorespiratory Stagnation Crisis:</strong> Microgravity eliminates natural convective air currents, creating stagnant boundary layers over leaves. This causes CO2 depletion and O2 accumulation, inducing 53 of 56 photorespiratory C2 cycle genes (94.6%).</li>
+        <li><strong>Latitudinal Clinal Variation:</strong> Predicted spaceflight response scores exhibit a statistically significant latitudinal gradient (Spearman &rho; = -0.125, p = 8.97e-5), with northern accessions showing lower response distinctness.</li>
+        <li><strong>Demographic Population Stratification:</strong> 1001 Genomes population groups account for 34.9% of score variance, with Asian accessions exhibiting lower predicted distinctness while Iberian and North Swedish accessions score highest.</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h2>Repository & Publication Artifacts</h2>
+      <p>This repository provides complete end-to-end reproducibility, including Docker containers, Conda environment specifications, R/Python analytical pipelines, Cytoscape.js knowledge graph payloads, and LaTeX source files for publication in <em>npj Microgravity</em>.</p>
+    </div>
+  </div>
+
+  <footer>
+    <p>&copy; 2026 Richard Barker &bull; Integrated Arabidopsis GWAS-Spaceflight Project &bull; Hosted on GitHub Pages</p>
+  </footer>
+</body>
+</html>

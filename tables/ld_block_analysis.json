@@ -1,0 +1,7 @@
+{
+  "total_snps_chr4": 29,
+  "genomic_window_kb": 14.06,
+  "effective_independent_snps_Me": 23.79,
+  "ld_redundancy_ratio": 1.22,
+  "consequence": "Strong LD linkage inflates unweighted allele counts and restricts genetic diversity sampling to a single haplotype block."
+}

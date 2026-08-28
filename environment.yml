@@ -1,0 +1,35 @@
+name: arabidopsis-gwas-spaceflight
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+dependencies:
+  - python=3.11
+  - r-base=4.3
+  - pip
+  # Python packages
+  - pandas
+  - numpy
+  - scipy
+  - scikit-learn
+  - networkx
+  - matplotlib
+  - seaborn
+  - matplotlib-venn
+  - biopython
+  - requests
+  - tqdm
+  - statsmodels
+  # R packages (Bioconductor via BiocManager)
+  - r-data.table
+  - r-stringr
+  - r-ggplot2
+  - r-svglite
+  - bioconductor-deseq2
+  - bioconductor-limma
+  - bioconductor-clusterprofiler
+  - bioconductor-org.at.tair.db
+  - r-metafor
+  - bioconductor-complexheatmap
+  - pip:
+    - pyvcf3

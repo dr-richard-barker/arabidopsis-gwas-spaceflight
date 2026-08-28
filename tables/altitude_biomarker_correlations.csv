@@ -1,0 +1,11 @@
+comparison,n,spearman_rho,pvalue,pvalue_fdr,significant_fdr
+Altitude vs Predicted Score,980,-0.046583864118671,0.1450513626870429,,False
+Altitude vs Genetic Diversity,980,-0.0079349633704423,0.8040643679804431,,False
+Altitude vs Alt-Hom SNP Count,980,-0.0079349633704423,0.8040643679804431,,False
+Latitude vs Predicted Score,980,-0.1247908818993398,8.969227443429883e-05,,False
+Latitude vs Genetic Diversity,980,-0.0260040690491534,0.416129377497041,,False
+Latitude vs Alt-Hom SNP Count,980,-0.0260040690491534,0.416129377497041,,False
+Altitude vs Het SNP Count,980,,,,False
+Latitude vs Het SNP Count,980,,,,False
+Altitude vs Ion Allele Burden,980,-0.007934963370442307,0.8040643679804431,0.8040643679804431,False
+Latitude vs Ion Allele Burden,980,-0.026004069049153467,0.41612937749704104,0.41612937749704104,False
