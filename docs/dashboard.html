@@ -190,14 +190,14 @@
       }
     ];
 
-    // Plot 1: Map
+    // Plot 1: Real Map Projection (Europe, Caucasus, Middle East)
     const mapTrace = {
       type: 'scattergeo',
       mode: 'markers+text',
       lat: data.map(d => d.lat),
       lon: data.map(d => d.lon),
       text: data.map(d => `#${d.rank} ${d.name}`),
-      textposition: 'top right',
+      textposition: ['top left', 'bottom left', 'top right', 'bottom right', 'bottom center', 'top left', 'top left', 'bottom left', 'top right', 'bottom right'],
       hoverinfo: 'text',
       hovertext: data.map(d => `<b>#${d.rank} ${d.name} (${d.country})</b><br>Stock ID: ${d.stock_id}<br>Elevation: ${d.elev}m<br>Chr4 SNPs: ${d.snps}<br>Score: ${d.score} (${d.pct})<br>Group: ${d.group}`),
       marker: {
@@ -209,21 +209,32 @@
 
     const mapLayout = {
       geo: {
-        scope: 'europe',
+        scope: 'world',
         showland: true,
-        landcolor: '#f1f5f9',
-        countrycolor: '#cbd5e1',
-        coastlinecolor: '#94a3b8',
+        landcolor: '#f8fafc',
+        showocean: true,
+        oceancolor: '#dbeafe',
+        showlakes: true,
+        lakecolor: '#dbeafe',
+        showrivers: true,
+        rivercolor: '#93c5fd',
+        showcountries: true,
+        countrycolor: '#475569',
+        countrywidth: 1.2,
+        showcoastlines: true,
+        coastlinecolor: '#1e293b',
+        coastlinewidth: 1.2,
         projection: { type: 'mercator' },
-        center: { lat: 50, lon: 20 },
-        zoom: 3
+        center: { lat: 48, lon: 22 },
+        lataxis: { range: [28, 72] },
+        lonaxis: { range: [-18, 62] }
       },
-      margin: { l: 0, r: 0, t: 0, b: 0 }
+      margin: { l: 10, r: 10, t: 10, b: 10 }
     };
 
     Plotly.newPlot('mapPlot', [mapTrace], mapLayout);
 
-    // Plot 2: Bar chart
+    // Plot 2: Bar chart with zero label overlap
     const barTrace = {
       x: data.map(d => `#${d.rank} ${d.name}`),
       y: data.map(d => d.score),
@@ -232,25 +243,25 @@
         color: data.map(d => d.score > 0.65 ? '#2b6cb0' : '#319795')
       },
       text: data.map(d => d.pct),
-      textposition: 'auto'
+      textposition: 'outside'
     };
 
     const barLayout = {
       title: 'Predicted Response Score by Rank',
-      yaxis: { title: 'Score (0 to 1 scale)', range: [0.60, 0.66] },
-      xaxis: { title: 'Accession' },
-      margin: { t: 40, b: 40, l: 50, r: 20 }
+      yaxis: { title: 'Score (0 to 1 scale)', range: [0.635, 0.660] },
+      xaxis: { title: 'Accession Rank & Name', tickangle: -25 },
+      margin: { t: 50, b: 65, l: 60, r: 30 }
     };
 
     Plotly.newPlot('scoreBarPlot', [barTrace], barLayout);
 
-    // Plot 3: Scatter plot
+    // Plot 3: Scatter plot with non-overlapping text positions
     const scatterTrace = {
       x: data.map(d => d.lat),
       y: data.map(d => d.elev),
       mode: 'markers+text',
-      text: data.map(d => d.name),
-      textposition: 'top center',
+      text: data.map(d => `#${d.rank} ${d.name}`),
+      textposition: ['top center', 'bottom center', 'top right', 'bottom left', 'bottom right', 'top center', 'top left', 'top right', 'top center', 'bottom right'],
       marker: {
         size: 14,
         color: data.map(d => d.score),
@@ -262,7 +273,12 @@
 
     const scatterLayout = {
       title: 'Latitude vs Elevation Distribution',
-      xaxis: { title: 'Latitude (°N)' },
+      xaxis: { title: 'Latitude (°N)', range: [35, 63] },
+      yaxis: { title: 'Elevation (m)', range: [-60, 650] },
+      margin: { t: 50, b: 65, l: 65, r: 30 }
+    };
+
+    Plotly.newPlot('geoScatterPlot', [scatterTrace], scatterLayout);
       yaxis: { title: 'Elevation (m)' },
       margin: { t: 40, b: 40, l: 50, r: 20 }
     };
