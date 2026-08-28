@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Interactive Ecotype Dashboard - Arabidopsis GWAS-Spaceflight Integration</title>
+  <link rel="stylesheet" href="css/style.css">
+  <script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
+  <style>
+    .dashboard-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+    @media (max-width: 900px) {
+      .dashboard-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+    .spotlight-card {
+      background: #f8fafc;
+      border-left: 5px solid var(--secondary-color);
+      padding: 1.5rem;
+      border-radius: 6px;
+      margin-top: 1rem;
+    }
+    .badge {
+      display: inline-block;
+      padding: 0.25rem 0.6rem;
+      border-radius: 4px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: white;
+    }
+    .bg-caucasus { background-color: #d62728; }
+    .bg-admixed { background-color: #1f77b4; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Top 10 Prioritized Ecotypes Dashboard</h1>
+    <p>Interactive spatial mapping, polygenic score breakdown, and phenotypic profile explorer for top spaceflight-responsive <em>Arabidopsis thaliana</em> accessions.</p>
+  </header>
+
+  <nav>
+    <a href="index.html">Overview</a>
+    <a href="dashboard.html" class="active">Ecotype Dashboard</a>
+    <a href="results.html">Interactive Results</a>
+    <a href="figures.html">Figure Browser</a>
+    <a href="methods.html">Methods & Pipeline</a>
+    <a href="data.html">Data Downloads</a>
+  </nav>
+
+  <div class="container">
+    <div class="card">
+      <h2>Interactive Spatial & Elevation Map</h2>
+      <p>Explore the geographic locations of the Top 10 accessions across Europe, the Caucasus, and the Middle East. Click on any marker to inspect its detailed phenotypic spotlight profile below.</p>
+      <div id="mapPlot" style="width:100%; height:520px;"></div>
+    </div>
+
+    <div class="dashboard-grid">
+      <div class="card">
+        <h3>Predicted Response Score & SNP Burden</h3>
+        <div id="scoreBarPlot" style="width:100%; height:380px;"></div>
+      </div>
+      <div class="card">
+        <h3>Latitudinal & Altitudinal Distribution</h3>
+        <div id="geoScatterPlot" style="width:100%; height:380px;"></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Ecotype Spotlight Explorer</h2>
+      <p>Select an accession from the dropdown or click a point on the map to inspect its full physiological profile and stock ordering details:</p>
+      
+      <select id="ecotypeSelect" style="width:100%; max-width:400px; padding:0.75rem; font-size:1rem; border-radius:6px; border:1px solid var(--border-color); margin-top:0.5rem; font-weight:600;">
+        <option value="1">#1 Istisu-9 (AZE - CS76953)</option>
+        <option value="2">#2 Xan-3 (AZE - CS78860)</option>
+        <option value="3">#3 Xan-5 (AZE - CS78861)</option>
+        <option value="4">#4 Lerik2-3 (AZE - CS77026)</option>
+        <option value="5">#5 Anz-0 (IRN - CS76439)</option>
+        <option value="6">#6 Oy-0 (NOR - CS77156)</option>
+        <option value="7">#7 Ty-1 (UK - CS78790)</option>
+        <option value="8">#8 Mc-1 (UK - CS78785)</option>
+        <option value="9">#9 Sr:3 (SWE - CS77267)</option>
+        <option value="10">#10 Monte-1 (ITA - CS76361)</option>
+      </select>
+
+      <div id="spotlightContent" class="spotlight-card">
+        <!-- Dynamically populated via JavaScript -->
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <p>&copy; 2026 Richard Barker &bull; Integrated Arabidopsis GWAS-Spaceflight Project</p>
+  </footer>
+
+  <script>
+    const data = [
+      {
+        rank: 1, name: "Istisu-9", id: 9099, stock_id: "CS76953", country: "AZE", group: "Italy/Balkan/Caucasus",
+        lat: 38.9786, lon: 48.5594, elev: 101.0, snps: "29 / 29", score: 0.6535, pct: "99.6%",
+        habitat: "Thermal mineral springs / saline Caspian soil (101m)",
+        flowering: "Late flowering (FT10 ~85d), strong vernalization requirement",
+        ionomic: "High tissue S34 & Mo98 accumulation, elevated heavy metal tolerance",
+        morphology: "Compact prostrate rosette, high trichome density, dark anthocyanin pigmentation"
+      },
+      {
+        rank: 2, name: "Xan-3", id: 9067, stock_id: "CS78860", country: "AZE", group: "Italy/Balkan/Caucasus",
+        lat: 38.6536, lon: 48.7992, elev: 20.0, snps: "29 / 29", score: 0.6535, pct: "99.6%",
+        habitat: "Lowland Caspian semi-arid steppe (20m)",
+        flowering: "Moderate-late flowering (FT16 ~68d), vernalization responsive",
+        ionomic: "High Co59 & Zn66 sequestration, stress-induced ion transporter activity",
+        morphology: "Slightly serrated leaves, dense secondary branching, stress-resilient canopy"
+      },
+      {
+        rank: 3, name: "Xan-5", id: 9069, stock_id: "CS78861", country: "AZE", group: "Italy/Balkan/Caucasus",
+        lat: 38.6536, lon: 48.7992, elev: 20.0, snps: "5 / 29", score: 0.6535, pct: "99.6%",
+        habitat: "Lowland Caspian microclimate transition (20m)",
+        flowering: "Intermediate flowering time, variable dormancy response",
+        ionomic: "Enriched metal ion homeostasis alleles, robust vacuolar sequestration",
+        morphology: "Medium rosette diameter, high photosynthetic light harvesting efficiency"
+      },
+      {
+        rank: 4, name: "Lerik2-3", id: 9081, stock_id: "CS77026", country: "AZE", group: "Italy/Balkan/Caucasus",
+        lat: 38.7833, lon: 48.5517, elev: 413.0, snps: "29 / 29", score: 0.6535, pct: "99.6%",
+        habitat: "High-elevation Talysh Mountains (413m)",
+        flowering: "Late flowering (FT10 ~92d), obligate cold requirement",
+        ionomic: "Elevated S34, Se82 & Zn66 accumulation, high antioxidant enzyme capacity",
+        morphology: "Thick leaf lamina, high UV-B pigment shielding, compact mountain rosette"
+      },
+      {
+        rank: 5, name: "Anz-0", id: 9759, stock_id: "CS76439", country: "IRN", group: "Italy/Balkan/Caucasus",
+        lat: 37.47, lon: 49.47, elev: -23.0, snps: "29 / 29", score: 0.6535, pct: "99.6%",
+        habitat: "Depression basin / Coastal Anzali lagoon (-23m)",
+        flowering: "Early-intermediate flowering (FT16 ~58.5d), low vernalization dependence",
+        ionomic: "Extreme salinity tolerance, high Na+ exclusion & vacuolar K+/Na+ ratio",
+        morphology: "Broad fleshy leaves, high water-use efficiency (WUE), salt-gland analog cuticle"
+      },
+      {
+        rank: 6, name: "Oy-0", id: 7288, stock_id: "CS77156", country: "NOR", group: "Admixed",
+        lat: 60.3855, lon: 6.1930, elev: 49.0, snps: "29 / 29", score: 0.6535, pct: "99.6%",
+        habitat: "Fjordland subarctic coast (60.4°N, 49m)",
+        flowering: "Late flowering (FT16 ~70.3d), strong long-day photoperiod sensitivity",
+        ionomic: "Cold-adapted ion balance, high cellular Mg2+ and phosphate retention",
+        morphology: "Flattened rosette, dark green chlorophyll-dense leaves, cold acclimation ready"
+      },
+      {
+        rank: 7, name: "Ty-1", id: 5784, stock_id: "CS78790", country: "UK", group: "Admixed",
+        lat: 56.4, lon: -5.2, elev: 153.0, snps: "29 / 29", score: 0.6535, pct: "99.6%",
+        habitat: "Scottish Highlands maritime upland (153m)",
+        flowering: "Intermediate-late flowering, winter-annual habit",
+        ionomic: "High Co59 & Mo98 transport efficiency under wet low-temp soils",
+        morphology: "Moderate rosette size, petiole elongation under shade/humidity"
+      },
+      {
+        rank: 8, name: "Mc-1", id: 5757, stock_id: "CS78785", country: "UK", group: "Admixed",
+        lat: 54.6, lon: -2.3, elev: 596.0, snps: "2 / 29", score: 0.6535, pct: "99.6%",
+        habitat: "Pennine alpine moorland (596m)",
+        flowering: "Very late flowering (FT10 ~87.8d), strong vernalization requirement",
+        ionomic: "Heavy metal tolerance (Zn, Cd), high peat soil acid tolerance",
+        morphology: "Rugose leaves, dense rosette, high anthocyanin under cold/light stress"
+      },
+      {
+        rank: 9, name: "Sr:3", id: 6086, stock_id: "CS77267", country: "SWE", group: "Admixed",
+        lat: 58.9, lon: 11.2, elev: 17.0, snps: "29 / 29", score: 0.6416, pct: "99.2%",
+        habitat: "Bohuslän Baltic coastal granite island (17m)",
+        flowering: "Late flowering, strong cold hardiness & freeze tolerance",
+        ionomic: "High S34 & Mo98 accumulation, marine aerosol salt tolerance",
+        morphology: "Compact rosette, thick waxy cuticle, high stomatal density control"
+      },
+      {
+        rank: 10, name: "Monte-1", id: 9966, stock_id: "CS76361", country: "ITA", group: "Italy/Balkan/Caucasus",
+        lat: 40.28, lon: 15.65, elev: 485.0, snps: "29 / 29", score: 0.6410, pct: "99.0%",
+        habitat: "Apennine mountain slope (485m)",
+        flowering: "Intermediate flowering time, drought avoidance strategy",
+        ionomic: "High calcium (Ca2+) and metal ion balance on limestone soils",
+        morphology: "Narrow erect leaves, deep root architecture, high water stress tolerance"
+      }
+    ];
+
+    // Plot 1: Map
+    const mapTrace = {
+      type: 'scattergeo',
+      mode: 'markers+text',
+      lat: data.map(d => d.lat),
+      lon: data.map(d => d.lon),
+      text: data.map(d => `#${d.rank} ${d.name}`),
+      textposition: 'top right',
+      hoverinfo: 'text',
+      hovertext: data.map(d => `<b>#${d.rank} ${d.name} (${d.country})</b><br>Stock ID: ${d.stock_id}<br>Elevation: ${d.elev}m<br>Chr4 SNPs: ${d.snps}<br>Score: ${d.score} (${d.pct})<br>Group: ${d.group}`),
+      marker: {
+        size: 16,
+        color: data.map(d => d.group === 'Italy/Balkan/Caucasus' ? '#d62728' : '#1f77b4'),
+        line: { color: 'black', width: 1.5 }
+      }
+    };
+
+    const mapLayout = {
+      geo: {
+        scope: 'europe',
+        showland: true,
+        landcolor: '#f1f5f9',
+        countrycolor: '#cbd5e1',
+        coastlinecolor: '#94a3b8',
+        projection: { type: 'mercator' },
+        center: { lat: 50, lon: 20 },
+        zoom: 3
+      },
+      margin: { l: 0, r: 0, t: 0, b: 0 }
+    };
+
+    Plotly.newPlot('mapPlot', [mapTrace], mapLayout);
+
+    // Plot 2: Bar chart
+    const barTrace = {
+      x: data.map(d => `#${d.rank} ${d.name}`),
+      y: data.map(d => d.score),
+      type: 'bar',
+      marker: {
+        color: data.map(d => d.score > 0.65 ? '#2b6cb0' : '#319795')
+      },
+      text: data.map(d => d.pct),
+      textposition: 'auto'
+    };
+
+    const barLayout = {
+      title: 'Predicted Response Score by Rank',
+      yaxis: { title: 'Score (0 to 1 scale)', range: [0.60, 0.66] },
+      xaxis: { title: 'Accession' },
+      margin: { t: 40, b: 40, l: 50, r: 20 }
+    };
+
+    Plotly.newPlot('scoreBarPlot', [barTrace], barLayout);
+
+    // Plot 3: Scatter plot
+    const scatterTrace = {
+      x: data.map(d => d.lat),
+      y: data.map(d => d.elev),
+      mode: 'markers+text',
+      text: data.map(d => d.name),
+      textposition: 'top center',
+      marker: {
+        size: 14,
+        color: data.map(d => d.score),
+        colorscale: 'Viridis',
+        showscale: true,
+        colorbar: { title: 'Score' }
+      }
+    };
+
+    const scatterLayout = {
+      title: 'Latitude vs Elevation Distribution',
+      xaxis: { title: 'Latitude (°N)' },
+      yaxis: { title: 'Elevation (m)' },
+      margin: { t: 40, b: 40, l: 50, r: 20 }
+    };
+
+    Plotly.newPlot('geoScatterPlot', [scatterTrace], scatterLayout);
+
+    // Spotlight Updater
+    function updateSpotlight(rankVal) {
+      const item = data.find(d => d.rank == rankVal);
+      if (!item) return;
+
+      const groupClass = item.group === 'Italy/Balkan/Caucasus' ? 'bg-caucasus' : 'bg-admixed';
+
+      document.getElementById('spotlightContent').innerHTML = `
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem;">
+          <div>
+            <h3 style="color:var(--primary-color); margin:0;">#${item.rank} ${item.name} (${item.country})</h3>
+            <p style="color:var(--text-muted); margin:0.2rem 0;">1001 Genomes ID: <strong>${item.id}</strong> &bull; ABRC Stock ID: <strong>${item.stock_id}</strong></p>
+          </div>
+          <div>
+            <span class="badge ${groupClass}">${item.group}</span>
+            <span style="font-size:1.1rem; font-weight:800; color:var(--primary-color); margin-left:0.5rem;">Score: ${item.score} (${item.pct})</span>
+          </div>
+        </div>
+        <hr style="margin:1rem 0; border:none; border-top:1px solid #cbd5e1;">
+        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:1rem;">
+          <div>
+            <p><strong>📍 Habitat & Coordinates:</strong> ${item.habitat} (${item.lat}°N, ${item.lon}°E)</p>
+            <p><strong>🌸 Flowering & Photoperiod Habit:</strong> ${item.flowering}</p>
+          </div>
+          <div>
+            <p><strong>🧪 Ionomic & Stress Transport:</strong> ${item.ionomic}</p>
+            <p><strong>🍃 Rosette & Leaf Morphology:</strong> ${item.morphology}</p>
+          </div>
+        </div>
+        <div style="margin-top:1.2rem;">
+          <a href="https://abrc.osu.edu/" target="_blank" style="display:inline-block; background-color:var(--secondary-color); color:white; padding:0.5rem 1rem; border-radius:4px; text-decoration:none; font-weight:600; font-size:0.9rem;">🛒 Order Stock ${item.stock_id} from ABRC</a>
+        </div>
+      `;
+    }
+
+    document.getElementById('ecotypeSelect').addEventListener('change', (e) => {
+      updateSpotlight(e.target.value);
+    });
+
+    // Map click event
+    document.getElementById('mapPlot').on('plotly_click', (dataEvt) => {
+      if (dataEvt.points.length > 0) {
+        const idx = dataEvt.points[0].pointIndex;
+        const rank = data[idx].rank;
+        document.getElementById('ecotypeSelect').value = rank;
+        updateSpotlight(rank);
+      }
+    });
+
+    // Initial spotlight load
+    updateSpotlight(1);
+  </script>
+</body>
+</html>
