@@ -190,97 +190,7 @@
       }
     ];
 
-    // Plot 1: Real Map Projection (Europe, Caucasus, Middle East)
-    const mapTrace = {
-      type: 'scattergeo',
-      mode: 'markers+text',
-      lat: data.map(d => d.lat),
-      lon: data.map(d => d.lon),
-      text: data.map(d => `#${d.rank} ${d.name}`),
-      textposition: ['top left', 'bottom left', 'top right', 'bottom right', 'bottom center', 'top left', 'top left', 'bottom left', 'top right', 'bottom right'],
-      hoverinfo: 'text',
-      hovertext: data.map(d => `<b>#${d.rank} ${d.name} (${d.country})</b><br>Stock ID: ${d.stock_id}<br>Elevation: ${d.elev}m<br>Chr4 SNPs: ${d.snps}<br>Score: ${d.score} (${d.pct})<br>Group: ${d.group}`),
-      marker: {
-        size: 16,
-        color: data.map(d => d.group === 'Italy/Balkan/Caucasus' ? '#d62728' : '#1f77b4'),
-        line: { color: 'black', width: 1.5 }
-      }
-    };
-
-    const mapLayout = {
-      geo: {
-        scope: 'world',
-        showland: true,
-        landcolor: '#f8fafc',
-        showocean: true,
-        oceancolor: '#dbeafe',
-        showlakes: true,
-        lakecolor: '#dbeafe',
-        showrivers: true,
-        rivercolor: '#93c5fd',
-        showcountries: true,
-        countrycolor: '#475569',
-        countrywidth: 1.2,
-        showcoastlines: true,
-        coastlinecolor: '#1e293b',
-        coastlinewidth: 1.2,
-        projection: { type: 'mercator' },
-        center: { lat: 48, lon: 22 },
-        lataxis: { range: [28, 72] },
-        lonaxis: { range: [-18, 62] }
-      },
-      margin: { l: 10, r: 10, t: 10, b: 10 }
-    };
-
-    Plotly.newPlot('mapPlot', [mapTrace], mapLayout);
-
-    // Plot 2: Bar chart with zero label overlap
-    const barTrace = {
-      x: data.map(d => `#${d.rank} ${d.name}`),
-      y: data.map(d => d.score),
-      type: 'bar',
-      marker: {
-        color: data.map(d => d.score > 0.65 ? '#2b6cb0' : '#319795')
-      },
-      text: data.map(d => d.pct),
-      textposition: 'outside'
-    };
-
-    const barLayout = {
-      title: 'Predicted Response Score by Rank',
-      yaxis: { title: 'Score (0 to 1 scale)', range: [0.635, 0.660] },
-      xaxis: { title: 'Accession Rank & Name', tickangle: -25 },
-      margin: { t: 50, b: 65, l: 60, r: 30 }
-    };
-
-    Plotly.newPlot('scoreBarPlot', [barTrace], barLayout);
-
-    // Plot 3: Scatter plot with non-overlapping text positions
-    const scatterTrace = {
-      x: data.map(d => d.lat),
-      y: data.map(d => d.elev),
-      mode: 'markers+text',
-      text: data.map(d => `#${d.rank} ${d.name}`),
-      textposition: ['top center', 'bottom center', 'top right', 'bottom left', 'bottom right', 'top center', 'top left', 'top right', 'top center', 'bottom right'],
-      marker: {
-        size: 14,
-        color: data.map(d => d.score),
-        colorscale: 'Viridis',
-        showscale: true,
-        colorbar: { title: 'Score' }
-      }
-    };
-
-    const scatterLayout = {
-      title: 'Latitude vs Elevation Distribution',
-      xaxis: { title: 'Latitude (°N)', range: [35, 63] },
-      yaxis: { title: 'Elevation (m)', range: [-60, 650] },
-      margin: { t: 50, b: 65, l: 65, r: 30 }
-    };
-
-    Plotly.newPlot('geoScatterPlot', [scatterTrace], scatterLayout);
-
-    // Spotlight Updater
+    // Spotlight Updater Function
     function updateSpotlight(rankVal) {
       const item = data.find(d => d.rank == rankVal);
       if (!item) return;
@@ -315,22 +225,119 @@
       `;
     }
 
+    // Always run spotlight updater immediately
+    try {
+      updateSpotlight(1);
+    } catch (e) {
+      console.error("Spotlight init error:", e);
+    }
+
     document.getElementById('ecotypeSelect').addEventListener('change', (e) => {
       updateSpotlight(e.target.value);
     });
 
-    // Map click event
-    document.getElementById('mapPlot').on('plotly_click', (dataEvt) => {
-      if (dataEvt.points.length > 0) {
-        const idx = dataEvt.points[0].pointIndex;
-        const rank = data[idx].rank;
-        document.getElementById('ecotypeSelect').value = rank;
-        updateSpotlight(rank);
-      }
-    });
+    // Render Plot 1: Spatial Map
+    try {
+      const mapTrace = {
+        type: 'scattergeo',
+        mode: 'markers+text',
+        lat: data.map(d => d.lat),
+        lon: data.map(d => d.lon),
+        text: data.map(d => `#${d.rank} ${d.name}`),
+        textposition: ['top left', 'bottom left', 'top right', 'bottom right', 'bottom center', 'top left', 'top left', 'bottom left', 'top right', 'bottom right'],
+        hoverinfo: 'text',
+        hovertext: data.map(d => `<b>#${d.rank} ${d.name} (${d.country})</b><br>Stock ID: ${d.stock_id}<br>Elevation: ${d.elev}m<br>Chr4 SNPs: ${d.snps}<br>Score: ${d.score} (${d.pct})<br>Group: ${d.group}`),
+        marker: {
+          size: 16,
+          color: data.map(d => d.group === 'Italy/Balkan/Caucasus' ? '#d62728' : '#1f77b4'),
+          line: { color: 'black', width: 1.5 }
+        }
+      };
 
-    // Initial spotlight load
-    updateSpotlight(1);
+      const mapLayout = {
+        geo: {
+          scope: 'europe',
+          showland: true,
+          landcolor: '#f8fafc',
+          showocean: true,
+          oceancolor: '#dbeafe',
+          showcountries: true,
+          countrycolor: '#64748b',
+          countrywidth: 1.0,
+          showcoastlines: true,
+          coastlinecolor: '#1e293b',
+          projection: { type: 'mercator' }
+        },
+        margin: { l: 0, r: 0, t: 0, b: 0 }
+      };
+
+      Plotly.newPlot('mapPlot', [mapTrace], mapLayout).then(gd => {
+        gd.on('plotly_click', (dataEvt) => {
+          if (dataEvt.points.length > 0) {
+            const idx = dataEvt.points[0].pointIndex;
+            const rank = data[idx].rank;
+            document.getElementById('ecotypeSelect').value = rank;
+            updateSpotlight(rank);
+          }
+        });
+      });
+    } catch (err) {
+      console.error("Map plot error:", err);
+    }
+
+    // Render Plot 2: Bar Chart
+    try {
+      const barTrace = {
+        x: data.map(d => `#${d.rank} ${d.name}`),
+        y: data.map(d => d.score),
+        type: 'bar',
+        marker: {
+          color: data.map(d => d.score > 0.65 ? '#2b6cb0' : '#319795')
+        },
+        text: data.map(d => d.pct),
+        textposition: 'auto'
+      };
+
+      const barLayout = {
+        title: 'Predicted Response Score by Rank',
+        yaxis: { title: 'Predicted Response Score', autorange: true },
+        xaxis: { title: 'Accession Rank & Name', tickangle: -25 },
+        margin: { t: 50, b: 70, l: 60, r: 30 }
+      };
+
+      Plotly.newPlot('scoreBarPlot', [barTrace], barLayout);
+    } catch (err) {
+      console.error("Bar plot error:", err);
+    }
+
+    // Render Plot 3: Scatter Plot
+    try {
+      const scatterTrace = {
+        x: data.map(d => d.lat),
+        y: data.map(d => d.elev),
+        mode: 'markers+text',
+        text: data.map(d => `#${d.rank} ${d.name}`),
+        textposition: ['top center', 'bottom center', 'top right', 'bottom left', 'bottom right', 'top center', 'top left', 'top right', 'top center', 'bottom right'],
+        marker: {
+          size: 14,
+          color: data.map(d => d.score),
+          colorscale: 'Viridis',
+          showscale: true,
+          colorbar: { title: 'Score' }
+        }
+      };
+
+      const scatterLayout = {
+        title: 'Latitude vs Elevation Distribution',
+        xaxis: { title: 'Latitude (°N)' },
+        yaxis: { title: 'Elevation (m)' },
+        margin: { t: 50, b: 65, l: 65, r: 30 }
+      };
+
+      Plotly.newPlot('geoScatterPlot', [scatterTrace], scatterLayout);
+    } catch (err) {
+      console.error("Scatter plot error:", err);
+    }
   </script>
 </body>
 </html>
