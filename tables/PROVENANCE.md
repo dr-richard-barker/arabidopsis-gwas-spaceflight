@@ -59,7 +59,7 @@ cannot be regenerated or checked against code until those scripts are recovered.
 | `figures/fig13_ecotype_prediction_real` | `28_fig13_ecotype_prediction.py` |
 | `figures/fig14_world_map` | **Biomni session; code not retained** (scripts 01-19) |
 | `figures/fig15_europe_map` | `33_fig15_europe_map.py` |
-| `figures/fig16_altitude_score` | **Biomni session; code not retained** (scripts 01-19) |
+| `figures/fig16_altitude_score` | `34_fig16_altitude_score.py` |
 | `figures/fig17_biomarker_multipanel` | **Biomni session; code not retained** (scripts 01-19) |
 | `figures/fig18_ionome_enrichment` | `30_ionome_enrichment.py` |
 | `figures/fig19_photorespiration_heatmap` | **Biomni session; code not retained** (scripts 01-19) |

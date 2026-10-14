@@ -44,7 +44,7 @@ arabidopsis-gwas-spaceflight/
 │   ├── manuscript.tex
 │   └── references.bib
 │
-├── code/                              # Scripts 20-33 (01-19 not in this repository; see Status)
+├── code/                              # Scripts 20-34 (01-19 not in this repository; see Status)
 │   ├── 20_extended_analyses.py        # Latitude/geographic plots (Figs 22, 24, 26, 27) + power table
 │   ├── 21_plot_top10_map.py           # top10_phenotypic_profiles.csv (also draws a draft Fig 28)
 │   ├── 22-25_*.py                     # Earlier Fig 28 variants with synthetic terrain, not for publication
@@ -55,7 +55,8 @@ arabidopsis-gwas-spaceflight/
 │   ├── 30_ionome_enrichment.py        # Six-trait ionome enrichment + Fig 18
 │   ├── 31_chr4_aragwas_window.py      # Chr4 AraGWAS window (fetched, cached in data/aragwas/) + Fig 23
 │   ├── 32_arapheno_flowering_times.py # FT10/FT16 for the top 10 from AraPheno
-│   └── 33_fig15_europe_map.py         # Fig 15
+│   ├── 33_fig15_europe_map.py         # Fig 15
+│   └── 34_fig16_altitude_score.py     # Fig 16
 │
 ├── execution_trace/                   # Archived 28 Aug 2026 Biomni plan and session notebook
 ├── figures/                           # 26 figures (PNG, most also SVG)
