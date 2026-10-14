@@ -1,6 +1,6 @@
 FROM continuumio/miniconda3:latest
 
-LABEL maintainer="Richard Barker <richard.barker@phylo.com>"
+LABEL maintainer="Richard Barker <dr.richard.barker@gmail.com>"
 LABEL description="Arabidopsis GWAS-Spaceflight Integration analysis environment"
 
 WORKDIR /workspace
