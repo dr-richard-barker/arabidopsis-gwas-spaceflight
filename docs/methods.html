@@ -26,18 +26,19 @@
   <div class="container">
     <div class="card">
       <h2>Pipeline DAG Architecture</h2>
+      <p><strong>Scripts 01&ndash;19 are not in this repository.</strong> They were run in a Biomni workspace and were not retained, so the steps below describe the pipeline as documented, not code you can run here. Scripts 20&ndash;27 (extended analyses and figures) are in <code>code/</code>.</p>
       <ol>
         <li><strong>01_download_gwas.py:</strong> Programmatically fetches AraGWAS REST API data (462 studies, 1.52M associations, 2,029 accessions).</li>
-        <li><strong>02_download_genelab.py:</strong> Retrieves 17 NASA GeneLab spaceflight transcriptomics studies (22 ecotype/genotype comparisons).</li>
+        <li><strong>02_download_genelab.py:</strong> Retrieves 13 NASA GeneLab spaceflight transcriptomics studies (22 ecotype/genotype comparisons; five are dark-grown BRIC studies).</li>
         <li><strong>03_differential_expression.R:</strong> Runs DESeq2 (RNA-seq count data) and limma (microarray normalization) across comparisons.</li>
         <li><strong>04_meta_analysis.R:</strong> Combines p-values via Fisher's method and fits random-effects meta-analysis models via REML (<code>metafor</code>).</li>
         <li><strong>05_gwas_spaceflight_integration.py:</strong> Performs Fisher's exact over-representation testing between GWAS candidate genes and spaceflight DEGs.</li>
         <li><strong>06_go_enrichment.R:</strong> Performs GO (BP, CC, MF) and KEGG pathway over-representation analysis via <code>clusterProfiler</code>.</li>
         <li><strong>07_ml_gene_classifier.py:</strong> Trains a nested 5-fold cross-validated Random Forest classifier on multi-omics features.</li>
         <li><strong>08_ml_ecotype_prediction.py:</strong> Implements hybrid polygenic risk scoring + Random Forest regression to rank accessions.</li>
-        <li><strong>09_knowledge_graph.py:</strong> Builds a 6-relational directed NetworkX multigraph (Cytoscape.js and GraphML export).</li>
+        <li><strong>09_knowledge_graph.py:</strong> Builds a 6-relational directed NetworkX multigraph (Cytoscape.js export).</li>
         <li><strong>13_geo_altitude_data.py & 15_altitude_biomarker_stats.py:</strong> Queries Open-Meteo API for elevations (980 accessions), performs Spearman rank correlations with BH-FDR, and fits OLS regressions.</li>
-        <li><strong>20_extended_analyses.py:</strong> Executes Q1–Q8 follow-up analyses (Chr4 locus deep dive, LD matrix eigenvalue decomposition, expanded genomic window PRS, statistical power calculations).</li>
+        <li><strong>20_extended_analyses.py:</strong> Latitude, Europe, global and population-group plots of the predicted scores (Figs 22, 24, 26, 27) and statistical power calculations. Its earlier LD, locus-annotation and expanded-score sections used simulated or hard-coded data and were removed on 14 Oct 2026.</li>
       </ol>
     </div>
 
@@ -46,10 +47,6 @@
       <h3>1. Fisher's Combined P-value Method</h3>
       <p>Given <em>k</em> independent spaceflight transcriptomic studies with p-values <em>p<sub>i</sub></em>, the combined test statistic <em>X<sup>2</sup></em> follows a chi-square distribution with 2<em>k</em> degrees of freedom:</p>
       <p style="text-align:center; font-family:serif; font-size:1.2rem; margin:1rem 0;"><em>X<sup>2</sup> = -2 &sum;<sub>i=1..k</sub> ln(p<sub>i</sub>)</em></p>
-
-      <h3>2. Effective Independent SNP Count (Me)</h3>
-      <p>To quantify linkage disequilibrium redundancy across the 29 Chr4 SNPs, the effective number of independent markers <em>M<sub>e</sub></em> was calculated from the eigenvalues &lambda;<sub>i</sub> of the pairwise correlation matrix:</p>
-      <p style="text-align:center; font-family:serif; font-size:1.2rem; margin:1rem 0;"><em>M<sub>e</sub> = 1 + &sum;<sub>i=1..M</sub> &lambda;<sub>i</sub> (1 - &lambda;<sub>i</sub> / M)</em></p>
     </div>
 
     <div class="card">

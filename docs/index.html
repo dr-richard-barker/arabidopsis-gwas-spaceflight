@@ -30,7 +30,8 @@
     <div class="card">
       <h2>Executive Summary</h2>
       <p>Spaceflight imposes complex abiotic stresses on plants, including microgravity, altered atmospheric gas exchange, and space radiation. However, the extent to which natural terrestrial genetic variation influences spaceflight adaptation remains poorly understood.</p>
-      <p>This project integrates <strong>462 GWAS studies</strong> from the AraGWAS catalog (1,523,262 Bonferroni-significant SNP-trait associations across 2,029 accessions) with <strong>17 NASA GeneLab spaceflight transcriptomics studies</strong> (22 ecotype/genotype comparisons). Through cross-study meta-analysis, machine learning, and knowledge graph modeling, we demonstrate that natural variation underlying terrestrial climate adaptation and ion homeostasis strongly predicts spaceflight response sensitivity.</p>
+      <p>This project integrates <strong>462 GWAS studies</strong> from the AraGWAS catalog (1,523,262 Bonferroni-significant SNP-trait associations across 2,029 accessions) with <strong>13 NASA GeneLab spaceflight transcriptomics studies</strong> (22 ecotype/genotype comparisons). Through cross-study meta-analysis, machine learning, and knowledge graph modeling, we find that genes associated with terrestrial climate-adaptation and leaf ionome traits are enriched among spaceflight-responsive genes.</p>
+      <p><em>Status (14 Oct 2026):</em> an evidence audit found that five of the 13 studies are dark-grown, that the code for the core analyses (scripts 01&ndash;19) is not in this repository, and that several earlier figures and claims rested on simulated data. Those have been removed; open questions are marked TODO in the manuscript.</p>
     </div>
 
     <div class="grid">
@@ -51,8 +52,8 @@
         <div class="label">Accessions Genotyped & Scored</div>
       </div>
       <div class="stat-box">
-        <div class="number">0.999</div>
-        <div class="label">Machine Learning Classifier AUC</div>
+        <div class="number">13</div>
+        <div class="label">GeneLab Studies (22 Comparisons)</div>
       </div>
       <div class="stat-box">
         <div class="number">94.6%</div>
@@ -63,16 +64,16 @@
     <div class="card">
       <h2>Key Scientific Discoveries</h2>
       <ul>
-        <li><strong>Convergent Chromosome 4 Locus (AT4G02820–AT4G02860):</strong> 29 of 31 top spaceflight-associated SNP positions (93.5%) co-localize with ion content GWAS QTLs on Chromosome 4, revealing a shared genetic architecture between terrestrial ion transport and microgravity adaptation.</li>
-        <li><strong>Photorespiratory Stagnation Crisis:</strong> Microgravity eliminates natural convective air currents, creating stagnant boundary layers over leaves. This causes CO2 depletion and O2 accumulation, inducing 53 of 56 photorespiratory C2 cycle genes (94.6%).</li>
+        <li><strong>Chromosome 4 Metabolite Locus (AT4G02820–AT4G02860):</strong> 29 of the 31 SNPs used for ecotype scoring, chosen as the highest-scoring associations in the AraGWAS catalog, lie in one 14 kb block associated with three LC-MS leaf metabolite features. The ecotype scores therefore rest largely on a single locus; it is not an ion-homeostasis locus.</li>
+        <li><strong>Photorespiration Genes:</strong> 53 of 56 photorespiration genes (94.6%) are differentially expressed in spaceflight. Altered gas exchange around leaves in microgravity is one hypothesis for this; it was not tested here.</li>
         <li><strong>Latitudinal Clinal Variation:</strong> Predicted spaceflight response scores exhibit a statistically significant latitudinal gradient (Spearman &rho; = -0.125, p = 8.97e-5), with northern accessions showing lower response distinctness.</li>
-        <li><strong>Demographic Population Stratification:</strong> 1001 Genomes population groups account for 34.9% of score variance, with Asian accessions exhibiting lower predicted distinctness while Iberian and North Swedish accessions score highest.</li>
+        <li><strong>Demographic Population Stratification:</strong> a regression on population group, latitude and elevation explains 34.9% of score variance; Asian accessions score lowest, and Spanish, relict and North Swedish accessions highest.</li>
       </ul>
     </div>
 
     <div class="card">
       <h2>Top 10 Prioritized Spaceflight-Responsive Accessions (<code>top10_predicted_ecotypes.csv</code> & <code>top10_phenotypic_profiles.csv</code>)</h2>
-      <p>The top 10 accessions prioritized for empirical spaceflight experiments, evaluated across 982 genotyped 1001 Genomes accessions using a hybrid polygenic score + Random Forest regression model calibrated on GeneLab spaceflight controls:</p>
+      <p>The top 10 accessions prioritized for empirical spaceflight experiments, evaluated across 982 genotyped 1001 Genomes accessions using a hybrid polygenic score + Random Forest regression model calibrated on GeneLab spaceflight responses (the scoring code is not in this repository):</p>
       
       <div style="margin: 1.5rem 0; text-align:center;">
         <img src="assets/fig28_top10_ecotypes_map.png" alt="Geographic Map of Top 10 Prioritized Accessions" style="width:100%; max-width:950px; border-radius:8px; border:1px solid var(--border-color); box-shadow: 0 4px 8px rgba(0,0,0,0.06);">
@@ -84,6 +85,7 @@
         <a href="https://github.com/dr-richard-barker/arabidopsis-gwas-spaceflight/raw/main/tables/top10_phenotypic_profiles.csv" download style="display:inline-block; background-color:var(--accent-color); color:white; padding:0.6rem 1.2rem; border-radius:6px; text-decoration:none; font-weight:600; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">📥 Download <code>top10_phenotypic_profiles.csv</code></a>
       </div>
 
+      <p style="font-size:0.9rem; color:var(--text-muted);">Flowering times are the 1001 Genomes FT10/FT16 values in AraPheno (phenotypes 261 and 262). Habitat, ionome and morphology descriptions shown here earlier had no source and have been removed.</p>
       <div class="table-responsive">
         <table>
           <thead>
@@ -92,10 +94,9 @@
               <th>Accession</th>
               <th>Stock ID</th>
               <th>Origin / Group</th>
-              <th>Habitat & Microclimate</th>
-              <th>Flowering & Photoperiod Habit</th>
-              <th>Ionomic & Stress Transport Profile</th>
-              <th>Rosette & Leaf Morphology</th>
+              <th>Elevation (m)</th>
+              <th>Chr4 Alt. Hom. SNPs</th>
+              <th>Flowering Time (AraPheno)</th>
               <th>Score (Percentile)</th>
             </tr>
           </thead>
@@ -105,10 +106,9 @@
               <td><strong>Istisu-9</strong><br><small>(9099)</small></td>
               <td>CS76953</td>
               <td>AZE<br><small>Italy/Balkan/Caucasus</small></td>
-              <td>Thermal mineral springs / saline Caspian soil (101m)</td>
-              <td>Late flowering (FT10 ~85d), strong vernalization requirement</td>
-              <td>High tissue S34 & Mo98 accumulation, elevated heavy metal tolerance</td>
-              <td>Compact prostrate rosette, high trichome density, dark anthocyanin pigmentation</td>
+              <td>101</td>
+              <td>29 / 29</td>
+              <td>FT10 100.25 d</td>
               <td><strong>0.653</strong><br><small>(99.6%)</small></td>
             </tr>
             <tr>
@@ -116,10 +116,9 @@
               <td><strong>Xan-3</strong><br><small>(9067)</small></td>
               <td>CS78860</td>
               <td>AZE<br><small>Italy/Balkan/Caucasus</small></td>
-              <td>Lowland Caspian semi-arid steppe (20m)</td>
-              <td>Moderate-late flowering (FT16 ~68d), vernalization responsive</td>
-              <td>High Co59 & Zn66 sequestration, stress-induced ion transporter activity</td>
-              <td>Slightly serrated leaves, dense secondary branching, stress-resilient canopy</td>
+              <td>20</td>
+              <td>29 / 29</td>
+              <td>FT16 130 d</td>
               <td><strong>0.653</strong><br><small>(99.6%)</small></td>
             </tr>
             <tr>
@@ -127,10 +126,9 @@
               <td><strong>Xan-5</strong><br><small>(9069)</small></td>
               <td>CS78861</td>
               <td>AZE<br><small>Italy/Balkan/Caucasus</small></td>
-              <td>Lowland Caspian microclimate transition (20m)</td>
-              <td>Intermediate flowering time, variable dormancy response</td>
-              <td>Enriched metal ion homeostasis alleles, robust vacuolar sequestration</td>
-              <td>Medium rosette diameter, high photosynthetic light harvesting efficiency</td>
+              <td>20</td>
+              <td>5 / 29</td>
+              <td>&mdash;</td>
               <td><strong>0.653</strong><br><small>(99.6%)</small></td>
             </tr>
             <tr>
@@ -138,10 +136,9 @@
               <td><strong>Lerik2-3</strong><br><small>(9081)</small></td>
               <td>CS77026</td>
               <td>AZE<br><small>Italy/Balkan/Caucasus</small></td>
-              <td>High-elevation Talysh Mountains (413m)</td>
-              <td>Late flowering (FT10 ~92d), obligate cold requirement</td>
-              <td>Elevated S34, Se82 & Zn66 accumulation, high antioxidant enzyme capacity</td>
-              <td>Thick leaf lamina, high UV-B pigment shielding, compact mountain rosette</td>
+              <td>413</td>
+              <td>29 / 29</td>
+              <td>FT10 91.25 d</td>
               <td><strong>0.653</strong><br><small>(99.6%)</small></td>
             </tr>
             <tr>
@@ -149,10 +146,9 @@
               <td><strong>Anz-0</strong><br><small>(9759)</small></td>
               <td>CS76439</td>
               <td>IRN<br><small>Italy/Balkan/Caucasus</small></td>
-              <td>Depression basin / Coastal Anzali lagoon (-23m)</td>
-              <td>Early-intermediate flowering (FT16 ~58.5d), low vernalization dependence</td>
-              <td>Extreme salinity tolerance, high Na+ exclusion & vacuolar K+/Na+ ratio</td>
-              <td>Broad fleshy leaves, high water-use efficiency (WUE), salt-gland analog cuticle</td>
+              <td>-23</td>
+              <td>29 / 29</td>
+              <td>FT16 58.5 d</td>
               <td><strong>0.653</strong><br><small>(99.6%)</small></td>
             </tr>
             <tr>
@@ -160,10 +156,9 @@
               <td><strong>Oy-0</strong><br><small>(7288)</small></td>
               <td>CS77156</td>
               <td>NOR<br><small>Admixed</small></td>
-              <td>Fjordland subarctic coast (60.4°N, 49m)</td>
-              <td>Late flowering (FT16 ~70.3d), strong long-day photoperiod sensitivity</td>
-              <td>Cold-adapted ion balance, high cellular Mg2+ and phosphate retention</td>
-              <td>Flattened rosette, dark green chlorophyll-dense leaves, cold acclimation ready</td>
+              <td>49</td>
+              <td>29 / 29</td>
+              <td>FT16 70.25 d</td>
               <td><strong>0.653</strong><br><small>(99.6%)</small></td>
             </tr>
             <tr>
@@ -171,10 +166,9 @@
               <td><strong>Ty-1</strong><br><small>(5784)</small></td>
               <td>CS78790</td>
               <td>UK<br><small>Admixed</small></td>
-              <td>Scottish Highlands maritime upland (153m)</td>
-              <td>Intermediate-late flowering, winter-annual habit</td>
-              <td>High Co59 & Mo98 transport efficiency under wet low-temp soils</td>
-              <td>Moderate rosette size, petiole elongation under shade/humidity</td>
+              <td>153</td>
+              <td>29 / 29</td>
+              <td>&mdash;</td>
               <td><strong>0.653</strong><br><small>(99.6%)</small></td>
             </tr>
             <tr>
@@ -182,10 +176,9 @@
               <td><strong>Mc-1</strong><br><small>(5757)</small></td>
               <td>CS78785</td>
               <td>UK<br><small>Admixed</small></td>
-              <td>Pennine alpine moorland (596m)</td>
-              <td>Very late flowering (FT10 ~87.8d), strong vernalization requirement</td>
-              <td>Heavy metal tolerance (Zn, Cd), high peat soil acid tolerance</td>
-              <td>Rugose leaves, dense rosette, high anthocyanin under cold/light stress</td>
+              <td>596</td>
+              <td>2 / 29</td>
+              <td>FT10 87.75 d</td>
               <td><strong>0.653</strong><br><small>(99.6%)</small></td>
             </tr>
             <tr>
@@ -193,10 +186,9 @@
               <td><strong>Sr:3</strong><br><small>(6086)</small></td>
               <td>CS77267</td>
               <td>SWE<br><small>Admixed</small></td>
-              <td>Bohuslän Baltic coastal granite island (17m)</td>
-              <td>Late flowering, strong cold hardiness & freeze tolerance</td>
-              <td>High S34 & Mo98 accumulation, marine aerosol salt tolerance</td>
-              <td>Compact rosette, thick waxy cuticle, high stomatal density control</td>
+              <td>17</td>
+              <td>29 / 29</td>
+              <td>&mdash;</td>
               <td><strong>0.642</strong><br><small>(99.2%)</small></td>
             </tr>
             <tr>
@@ -204,10 +196,9 @@
               <td><strong>Monte-1</strong><br><small>(9966)</small></td>
               <td>CS76361</td>
               <td>ITA<br><small>Italy/Balkan/Caucasus</small></td>
-              <td>Apennine mountain slope (485m)</td>
-              <td>Intermediate flowering time, drought avoidance strategy</td>
-              <td>High calcium (Ca2+) and metal ion balance on limestone soils</td>
-              <td>Narrow erect leaves, deep root architecture, high water stress tolerance</td>
+              <td>485</td>
+              <td>29 / 29</td>
+              <td>&mdash;</td>
               <td><strong>0.641</strong><br><small>(99.0%)</small></td>
             </tr>
           </tbody>
@@ -217,7 +208,7 @@
 
     <div class="card">
       <h2>Repository & Publication Artifacts</h2>
-      <p>This repository provides complete end-to-end reproducibility, including Docker containers, Conda environment specifications, R/Python analytical pipelines, Cytoscape.js knowledge graph payloads, and LaTeX source files for publication in <em>npj Microgravity</em>.</p>
+      <p>This repository holds the results tables, figures, knowledge graph files, Docker and Conda environment specifications, the extended-analysis and figure scripts (20&ndash;27) and the LaTeX manuscript source. The scripts that produced the core results (01&ndash;19) were run in a Biomni workspace and are not in this repository, so those results cannot yet be reproduced from it.</p>
     </div>
   </div>
 

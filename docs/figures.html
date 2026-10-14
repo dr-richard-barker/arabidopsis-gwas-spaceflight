@@ -9,7 +9,7 @@
 <body>
   <header>
     <h1>Publication Figures Gallery</h1>
-    <p>High-resolution figures from the main manuscript, geo-altitude extended research, fine-mapping, and population stratification analyses.</p>
+    <p>Figures from the main manuscript, the geographic and altitude analyses, and population stratification.</p>
     <a href="https://dr-richard-barker.github.io/AstroBotany/" target="_blank" class="hub-banner">🚀 AstroBotany Hub</a>
   </header>
 
@@ -37,7 +37,7 @@
       <img src="assets/fig2_meta_analysis.png" alt="Figure 2">
       <div class="figure-caption">
         <h4>Figure 2: Spaceflight Transcriptomic Meta-Analysis & GO Enrichment</h4>
-        <p>Cross-study volcano plot and top enriched GO Biological Process categories across 17 NASA GeneLab spaceflight studies (2,550 consensus DEGs).</p>
+        <p>Cross-study volcano plot and top enriched GO Biological Process categories across 13 NASA GeneLab spaceflight studies (22 comparisons; 2,550 consensus DEGs).</p>
       </div>
     </div>
 
@@ -53,7 +53,7 @@
       <img src="assets/fig4_ml_results.png" alt="Figure 4">
       <div class="figure-caption">
         <h4>Figure 4: Machine Learning Classifier Performance</h4>
-        <p>ROC curve (AUC = 0.999), Precision-Recall curve (AP = 0.986), and Gini feature importance rankings from nested cross-validated Random Forest modeling.</p>
+        <p>(A) Random forest feature importances and (B) ROC curve (AUC = 0.999). The features include the Fisher and meta-analysis statistics that define the consensus label, so the AUC reflects recovery of the labelling rule, not independent predictive performance.</p>
       </div>
     </div>
 
@@ -65,20 +65,13 @@
       </div>
     </div>
 
-    <div class="figure-card">
-      <img src="assets/fig6_ecotype_map.png" alt="Figure 6">
-      <div class="figure-caption">
-        <h4>Figure 6: Global Ecotype Spaceflight Distinctness Map</h4>
-        <p>Geographic distribution of predicted spaceflight response scores across 2,029 natural Arabidopsis accessions.</p>
-      </div>
-    </div>
 
     <!-- Geo-Altitude & Biomarker Figures -->
     <div class="figure-card">
       <img src="assets/fig14_world_map.png" alt="Figure 14">
       <div class="figure-caption">
-        <h4>Figure 14: 1001 Genomes Real Genotype Mapping</h4>
-        <p>Global map of 982 accessions genotyped across top GWAS SNPs and paired with Open-Meteo elevation data.</p>
+        <h4>Figure 14: World Map of the 982 Scored Accessions</h4>
+        <p>Global map of 982 1001 Genomes accessions scored at the 31 highest-scoring AraGWAS SNPs, with Open-Meteo elevation data.</p>
       </div>
     </div>
 
@@ -102,42 +95,21 @@
       <img src="assets/fig17_biomarker_multipanel.png" alt="Figure 17">
       <div class="figure-caption">
         <h4>Figure 17: Multi-Panel Altitude & Biomarker Diagnostics</h4>
-        <p>Four-panel analysis evaluating elevation, latitude, photorespiration log2FC, and ion content allele burden.</p>
+        <p>Four-panel analysis of elevation, latitude and predicted score. Panel C's &ldquo;ion-associated allele burden&rdquo; is the same variable as the alternate homozygous SNP count, and the loci concerned are metabolite-feature loci, not ionome loci.</p>
       </div>
     </div>
 
-    <div class="figure-card">
-      <img src="assets/fig18_ion_enrichment.png" alt="Figure 18">
-      <div class="figure-caption">
-        <h4>Figure 18: Ion Homeostasis GWAS Enrichment & Locus Sharing</h4>
-        <p>(A) Fold enrichment across 10 ionomic traits; (B) Co-localization of 29/31 top SNPs on Chromosome 4.</p>
-      </div>
-    </div>
 
     <div class="figure-card">
       <img src="assets/fig19_photorespiration_heatmap.png" alt="Figure 19">
       <div class="figure-caption">
         <h4>Figure 19: Photorespiratory C2 Cycle Expression Heatmap</h4>
-        <p>Expression changes across 56 photorespiration genes in spaceflight studies (94.6% significantly DE).</p>
+        <p>Log2 fold changes of 18 curated photorespiration genes (padj &lt; 0.05) across ecotype and genotype comparisons, including mutant and pooled comparisons. Overall, 53 of 56 photorespiration genes are differentially expressed.</p>
       </div>
     </div>
 
     <!-- Extended Analysis Figures (Q1 - Q8) -->
-    <div class="figure-card">
-      <img src="assets/fig20_chr4_locus_diagram.png" alt="Figure 20">
-      <div class="figure-caption">
-        <h4>Figure 20: Chromosome 4 Shared Locus Architecture (AT4G02820–AT4G02860)</h4>
-        <p>Gene-level diagram and trait co-localization network for the ~14 kb shared locus on Chromosome 4.</p>
-      </div>
-    </div>
 
-    <div class="figure-card">
-      <img src="assets/fig21_extended_altitude_analysis.png" alt="Figure 21">
-      <div class="figure-caption">
-        <h4>Figure 21: Extended Window Altitude & Latitude Regressions</h4>
-        <p>Correlation regressions testing expanded polygenic risk scores across 763 GWAS overlap genes against elevation and latitude.</p>
-      </div>
-    </div>
 
     <div class="figure-card">
       <img src="assets/fig22_clinal_latitude_gradient.png" alt="Figure 22">
@@ -147,35 +119,21 @@
       </div>
     </div>
 
-    <div class="figure-card">
-      <img src="assets/fig23_ion_manhattan_chr4.png" alt="Figure 23">
-      <div class="figure-caption">
-        <h4>Figure 23: Chromosome 4 Ion Content GWAS Manhattan Plot</h4>
-        <p>Zoomed view of Chromosome 4 ion QTL peaks overlapping the top spaceflight-predictive SNP cluster.</p>
-      </div>
-    </div>
 
     <div class="figure-card">
       <img src="assets/fig24_europe_score_heatmap.png" alt="Figure 24">
       <div class="figure-caption">
         <h4>Figure 24: Spatial Heatmap of Predicted Scores over Europe</h4>
-        <p>Color-contoured geographic heatmap showing regional clustering of high/low predicted spaceflight response accessions.</p>
+        <p>Predicted spaceflight response score at each European accession's origin (35&ndash;70&deg;N, 10&deg;W&ndash;40&deg;E).</p>
       </div>
     </div>
 
-    <div class="figure-card">
-      <img src="assets/fig25_ld_heatmap_chr4.png" alt="Figure 25">
-      <div class="figure-caption">
-        <h4>Figure 25: Chromosome 4 Linkage Disequilibrium Matrix</h4>
-        <p>Heatmap of pairwise r&sup2; LD values across the 29 Chr4 SNPs, demonstrating haplotype redundancy (Effective SNPs Me = 4.2).</p>
-      </div>
-    </div>
 
     <div class="figure-card">
       <img src="assets/fig26_score_geographic_surface.png" alt="Figure 26">
       <div class="figure-caption">
         <h4>Figure 26: Global Spatial Response Surface</h4>
-        <p>Continuous interpolated spatial plot of predicted spaceflight response scores across global accession origins.</p>
+        <p>Predicted spaceflight response score at each of the 982 accessions' origins.</p>
       </div>
     </div>
 

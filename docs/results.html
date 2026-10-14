@@ -10,7 +10,7 @@
 <body>
   <header>
     <h1>Interactive Results & Key Findings</h1>
-    <p>Comprehensive exploratory findings across GWAS integration, polygenic risk scoring, fine-mapping, and spatial altitude analysis.</p>
+    <p>Findings from the GWAS integration, ecotype scoring and geographic analyses.</p>
     <a href="https://dr-richard-barker.github.io/AstroBotany/" target="_blank" class="hub-banner">🚀 AstroBotany Hub</a>
   </header>
 
@@ -31,14 +31,14 @@
         <button class="tab-btn" data-tab="tab-gwas">GWAS Overlap</button>
         <button class="tab-btn" data-tab="tab-ml">Machine Learning</button>
         <button class="tab-btn" data-tab="tab-geo">Geographic Clines</button>
-        <button class="tab-btn" data-tab="tab-chr4">Chr4 Shared Locus (Q1, Q5, Q8)</button>
-        <button class="tab-btn" data-tab="tab-extended">Extended Window & Power (Q2, Q4, Q6)</button>
+        <button class="tab-btn" data-tab="tab-chr4">Chr4 Locus</button>
+        <button class="tab-btn" data-tab="tab-extended">Statistical Power</button>
       </div>
 
       <!-- Tab 1: Meta-Analysis -->
       <div class="tab-content active" id="tab-meta">
         <h2>Cross-Study Meta-Analysis of Spaceflight Response</h2>
-        <p>Across 17 NASA GeneLab spaceflight transcriptomics studies (22 ecotype/genotype comparisons; 534,547 gene comparisons), cross-study meta-analysis identified <strong>2,550 consensus significant spaceflight DEGs</strong> (1,291 upregulated, 1,259 downregulated; FDR &lt; 0.05 in both Fisher combined p-value and REML random-effects meta-analysis).</p>
+        <p>Across 13 NASA GeneLab spaceflight transcriptomics studies (22 ecotype/genotype comparisons; 534,547 gene comparisons), cross-study meta-analysis identified <strong>2,550 consensus significant spaceflight DEGs</strong> (1,291 upregulated, 1,259 downregulated; FDR &lt; 0.05 in both Fisher combined p-value and REML random-effects meta-analysis). Five of the 13 studies are continuous-dark BRIC experiments (OSD-37, 121, 147, 205, 321), and 2,429 of the 22,405 Fisher-significant entries are unmapped numeric microarray row identifiers; both are flagged for re-analysis in the manuscript.</p>
         <div class="grid">
           <img src="assets/fig2_meta_analysis.png" alt="Meta-Analysis Volcano & GO" style="width:100%; border-radius:6px;">
           <img src="assets/fig19_photorespiration_heatmap.png" alt="Photorespiration Heatmap" style="width:100%; border-radius:6px;">
@@ -48,17 +48,16 @@
       <!-- Tab 2: GWAS Overlap -->
       <div class="tab-content" id="tab-gwas">
         <h2>AraGWAS Catalog Overlap & Trait Enrichment</h2>
-        <p>Integrating 462 AraGWAS studies (1,523,262 Bonferroni-significant associations across 279 phenotypes) revealed that GWAS candidate genes are strongly enriched among spaceflight DEGs (<strong>763 overlap genes, OR = 4.23, p = 4.45e-102</strong>). 90 GWAS phenotypes were significantly enriched, led by climate adaptation and ion homeostasis traits.</p>
+        <p>Integrating 462 AraGWAS studies (1,523,262 Bonferroni-significant associations across 279 phenotypes) revealed that GWAS candidate genes are strongly enriched among spaceflight DEGs (<strong>763 overlap genes, OR = 4.23, p = 4.45e-102</strong>). 90 GWAS phenotypes were significantly enriched, led by climate adaptation and leaf ionome traits (molybdenum, cobalt, sulfur).</p>
         <div class="grid">
           <img src="assets/fig3_integration.png" alt="GWAS Integration" style="width:100%; border-radius:6px;">
-          <img src="assets/fig18_ion_enrichment.png" alt="Ion Trait Enrichment" style="width:100%; border-radius:6px;">
         </div>
       </div>
 
       <!-- Tab 3: Machine Learning -->
       <div class="tab-content" id="tab-ml">
         <h2>Machine Learning & Ecotype Prediction</h2>
-        <p>A nested 5-fold cross-validated Random Forest classifier discriminated spaceflight-responsive genes with near-perfect accuracy (<strong>AUC = 0.999, Average Precision = 0.986</strong>). Direction concordance across studies (0.188) and Fisher combined p-value (0.149) were top features.</p>
+        <p>A nested 5-fold cross-validated random forest recovered the consensus labels almost perfectly (AUC = 0.999, average precision = 0.986). Its features include the Fisher and meta-analysis statistics that define those labels, so this reflects recovery of the labelling rule rather than independent predictive performance. Direction concordance across studies (0.188) and Fisher combined p-value (0.149) were the top features.</p>
         <div class="grid">
           <img src="assets/fig4_ml_results.png" alt="ML ROC and Feature Importance" style="width:100%; border-radius:6px;">
           <img src="assets/fig13_ecotype_prediction_real.png" alt="Ecotype Scores" style="width:100%; border-radius:6px;">
@@ -76,9 +75,8 @@
                 <th>Origin</th>
                 <th>Group</th>
                 <th>Lat / Elev</th>
-                <th>Chr4 Alt Burden</th>
+                <th>Chr4 Alt. Hom. SNPs</th>
                 <th>Score (Percentile)</th>
-                <th>Supporting Rationale</th>
               </tr>
             </thead>
             <tbody>
@@ -92,7 +90,6 @@
                 <td>38.98°N / 101m</td>
                 <td>29 / 29 SNPs</td>
                 <td><strong>0.653</strong> (99.6%)</td>
-                <td>Maximal Chr4 ion/stress allele burden; Caucasus thermal & salinity stress selection history</td>
               </tr>
               <tr>
                 <td><strong>2</strong></td>
@@ -104,7 +101,6 @@
                 <td>38.65°N / 20m</td>
                 <td>29 / 29 SNPs</td>
                 <td><strong>0.653</strong> (99.6%)</td>
-                <td>Maximal Chr4 ion/stress allele burden; Caspian lowland environmental stress adaptation</td>
               </tr>
               <tr>
                 <td><strong>3</strong></td>
@@ -116,7 +112,6 @@
                 <td>38.65°N / 20m</td>
                 <td>5 / 29 SNPs</td>
                 <td><strong>0.653</strong> (99.6%)</td>
-                <td>Top polygenic score rank; Caucasian microclimate population stratification</td>
               </tr>
               <tr>
                 <td><strong>4</strong></td>
@@ -128,7 +123,6 @@
                 <td>38.78°N / 413m</td>
                 <td>29 / 29 SNPs</td>
                 <td><strong>0.653</strong> (99.6%)</td>
-                <td>Maximal Chr4 ion/stress allele burden; High-altitude (413m) Caucasus adaptation</td>
               </tr>
               <tr>
                 <td><strong>5</strong></td>
@@ -140,7 +134,6 @@
                 <td>37.47°N / -23m</td>
                 <td>29 / 29 SNPs</td>
                 <td><strong>0.653</strong> (99.6%)</td>
-                <td>Maximal Chr4 ion/stress allele burden; Below sea-level (-23m) coastal saline habitat</td>
               </tr>
               <tr>
                 <td><strong>6</strong></td>
@@ -152,7 +145,6 @@
                 <td>60.39°N / 49m</td>
                 <td>29 / 29 SNPs</td>
                 <td><strong>0.653</strong> (99.6%)</td>
-                <td>Maximal Chr4 ion/stress allele burden; Subarctic high-latitude (60.4°N) photoperiod adaptation</td>
               </tr>
               <tr>
                 <td><strong>7</strong></td>
@@ -164,7 +156,6 @@
                 <td>56.40°N / 153m</td>
                 <td>29 / 29 SNPs</td>
                 <td><strong>0.653</strong> (99.6%)</td>
-                <td>Maximal Chr4 ion/stress allele burden; Maritime highland (153m) cold & moisture adaptation</td>
               </tr>
               <tr>
                 <td><strong>8</strong></td>
@@ -176,7 +167,6 @@
                 <td>54.60°N / 596m</td>
                 <td>2 / 29 SNPs</td>
                 <td><strong>0.653</strong> (99.6%)</td>
-                <td>Top polygenic score rank; High-altitude (596m) UK upland microclimate selection</td>
               </tr>
               <tr>
                 <td><strong>9</strong></td>
@@ -188,7 +178,6 @@
                 <td>58.90°N / 17m</td>
                 <td>29 / 29 SNPs</td>
                 <td><strong>0.642</strong> (99.2%)</td>
-                <td>Maximal Chr4 ion/stress allele burden; Scandinavian coastal cold & light adaptive background</td>
               </tr>
               <tr>
                 <td><strong>10</strong></td>
@@ -200,7 +189,6 @@
                 <td>40.28°N / 485m</td>
                 <td>29 / 29 SNPs</td>
                 <td><strong>0.641</strong> (99.0%)</td>
-                <td>Maximal Chr4 ion/stress allele burden; Mediterranean mountain (485m) metal/drought resilience</td>
               </tr>
             </tbody>
           </table>
@@ -210,7 +198,7 @@
       <!-- Tab 4: Geographic Clines -->
       <div class="tab-content" id="tab-geo">
         <h2>Geographic Distribution & Latitudinal Gradients</h2>
-        <p>Mapping 982 accessions from the 1001 Genomes Project demonstrated a significant latitudinal gradient (Spearman &rho; = -0.125, p = 8.97e-5), while elevation showed a weak non-significant trend (&rho; = -0.047). Population group demographic history explained 34.9% of predicted score variance.</p>
+        <p>Mapping 982 accessions from the 1001 Genomes Project demonstrated a significant latitudinal gradient (Spearman &rho; = -0.125, p = 8.97e-5), while elevation showed a weak non-significant trend (&rho; = -0.047). A regression on population group, latitude and elevation explained 34.9% of predicted score variance (R&sup2; = 0.349).</p>
         <div class="grid">
           <img src="assets/fig22_clinal_latitude_gradient.png" alt="Clinal Latitude Gradient" style="width:100%; border-radius:6px;">
           <img src="assets/fig24_europe_score_heatmap.png" alt="Europe Score Heatmap" style="width:100%; border-radius:6px;">
@@ -221,22 +209,14 @@
 
       <!-- Tab 5: Chr4 Shared Locus -->
       <div class="tab-content" id="tab-chr4">
-        <h2>Chromosome 4 Shared Locus Analysis (Q1, Q5, Q8)</h2>
-        <p>29 of 31 top spaceflight-predictive SNPs (93.5%) map to a narrow ~14 kb locus on Chromosome 4 (positions 1,257,343–1,271,408; spanning <code>AT4G02820</code> to <code>AT4G02860</code>). Linkage disequilibrium analysis indicates an effective number of independent SNPs <em>M<sub>e</sub></em> = 4.2 out of 29 SNPs, confirming that strong LD inflation limits discriminative power across single-locus polygenic scores.</p>
-        <div class="grid">
-          <img src="assets/fig20_chr4_locus_diagram.png" alt="Chr4 Locus Diagram" style="width:100%; border-radius:6px;">
-          <img src="assets/fig23_ion_manhattan_chr4.png" alt="Chr4 Ion Manhattan" style="width:100%; border-radius:6px;">
-          <img src="assets/fig25_ld_heatmap_chr4.png" alt="Chr4 LD Heatmap" style="width:100%; border-radius:6px;">
-        </div>
+        <h2>Chromosome 4 Locus</h2>
+        <p>The 31 SNPs used for ecotype scoring are the 31 highest-scoring associations in the AraGWAS catalog, selected on GWAS score alone. Twenty-nine lie in a 14 kb block on chromosome 4 (positions 1,257,343&ndash;1,271,408; <code>AT4G02820</code> to <code>AT4G02860</code>). In AraGWAS, all 29 positions are associated with three LC-MS leaf metabolite features (M216T665, M172T666, M130T666), not with ionome traits: none is shared with Co59, As75 or Mo98 (<code>ion_content_locus_sharing.csv</code>). The ecotype scores therefore rest largely on one metabolite-associated locus.</p>
       </div>
 
       <!-- Tab 6: Extended Window & Power -->
       <div class="tab-content" id="tab-extended">
-        <h2>Extended Window Polygenic Scoring & Statistical Power (Q2, Q4, Q6)</h2>
-        <p>Expanding polygenic risk scores across wider genomic windows (all 763 GWAS overlap genes across Chromosomes 1–5) maintains the strong latitudinal gradient while smoothing local LD redundancy. Statistical power calculations highlight that while small sample size (n = 4 ecotypes) limits direct elevation-transcriptomic correlations, the full 982-accession dataset provides &gt;99% power for clinal detection.</p>
-        <div class="grid">
-          <img src="assets/fig21_extended_altitude_analysis.png" alt="Extended Window Correlations" style="width:100%; border-radius:6px;">
-        </div>
+        <h2>Statistical Power (Q4)</h2>
+        <p>With only four ecotypes (n = 4) having both spaceflight transcriptomic data and geographic coordinates, correlations between elevation and transcriptomic responses are badly underpowered (<code>power_analysis_results.csv</code>).</p>
       </div>
     </div>
   </div>

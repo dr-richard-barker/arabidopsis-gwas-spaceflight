@@ -10,7 +10,7 @@
 <body>
   <header>
     <h1>FAIR Data Downloads & Repositories</h1>
-    <p>Open access datasets, predictions, knowledge graph tables, and reproducible conda/Docker environments.</p>
+    <p>Open access datasets, predictions, knowledge graph tables, and conda/Docker environments.</p>
     <a href="https://dr-richard-barker.github.io/AstroBotany/" target="_blank" class="hub-banner">🚀 AstroBotany Hub</a>
   </header>
 
@@ -44,14 +44,14 @@
             <tr>
               <td><code>top10_predicted_ecotypes.csv</code></td>
               <td>Prioritized Ecotypes</td>
-              <td>Top 10 spaceflight-responsive accessions with ABRC stock IDs, coordinates, Chr4 SNP burden, and supporting rationale.</td>
+              <td>Top 10 accessions with ABRC stock IDs, coordinates, elevation, chromosome-4 alternate homozygous SNP count, and predicted score.</td>
               <td>10</td>
               <td><a href="https://github.com/dr-richard-barker/arabidopsis-gwas-spaceflight/raw/main/tables/top10_predicted_ecotypes.csv" download>Download CSV</a></td>
             </tr>
             <tr>
               <td><code>top10_phenotypic_profiles.csv</code></td>
               <td>Prioritized Ecotypes & Phenotypes</td>
-              <td>Expanded physiological & phenotypic profiles for top 10 accessions (habitat, flowering FT10/FT16, ionome, rosette morphology).</td>
+              <td>Top 10 accessions with flowering times from AraPheno (1001 Genomes FT10/FT16) where available.</td>
               <td>10</td>
               <td><a href="https://github.com/dr-richard-barker/arabidopsis-gwas-spaceflight/raw/main/tables/top10_phenotypic_profiles.csv" download>Download CSV</a></td>
             </tr>
@@ -63,34 +63,6 @@
               <td><a href="https://github.com/dr-richard-barker/arabidopsis-gwas-spaceflight/raw/main/tables/ecotype_prediction_geo.csv" download>Download CSV</a></td>
             </tr>
             <tr>
-              <td><code>chr4_locus_functional_annotation.csv</code></td>
-              <td>Chr4 Shared Locus (Q1, Q8)</td>
-              <td>Gene-by-gene functional annotations, spaceflight roles, and ion traits for AT4G02820–AT4G02860.</td>
-              <td>5</td>
-              <td><a href="https://github.com/dr-richard-barker/arabidopsis-gwas-spaceflight/raw/main/tables/chr4_locus_functional_annotation.csv" download>Download CSV</a></td>
-            </tr>
-            <tr>
-              <td><code>extended_altitude_correlations.csv</code></td>
-              <td>Extended Window (Q2)</td>
-              <td>Spearman correlations across baseline 31-SNP, expanded 763-gene, and multi-chromosome PRS windows.</td>
-              <td>3</td>
-              <td><a href="https://github.com/dr-richard-barker/arabidopsis-gwas-spaceflight/raw/main/tables/extended_altitude_correlations.csv" download>Download CSV</a></td>
-            </tr>
-            <tr>
-              <td><code>expanded_polygenic_scores.csv</code></td>
-              <td>Extended Window (Q6)</td>
-              <td>Multi-chromosome polygenic risk scores across all 982 genotyped accessions.</td>
-              <td>982</td>
-              <td><a href="https://github.com/dr-richard-barker/arabidopsis-gwas-spaceflight/raw/main/tables/expanded_polygenic_scores.csv" download>Download CSV</a></td>
-            </tr>
-            <tr>
-              <td><code>ld_block_analysis.csv</code></td>
-              <td>LD & Score Limits (Q5)</td>
-              <td>Linkage disequilibrium summary, effective independent SNP count Me (4.2), and redundancy ratio.</td>
-              <td>1</td>
-              <td><a href="https://github.com/dr-richard-barker/arabidopsis-gwas-spaceflight/raw/main/tables/ld_block_analysis.csv" download>Download CSV</a></td>
-            </tr>
-            <tr>
               <td><code>power_analysis_results.csv</code></td>
               <td>Power & Limitations (Q4)</td>
               <td>Statistical power calculations across sample sizes (n=4 to n=982) and effect sizes.</td>
@@ -100,8 +72,8 @@
             <tr>
               <td><code>gwas_de_overlap_genes.csv</code></td>
               <td>GWAS & Transcriptomics</td>
-              <td>764 GWAS candidate genes overlapping spaceflight DEGs with meta-analysis metrics.</td>
-              <td>764</td>
+              <td>763 GWAS candidate genes overlapping spaceflight DEGs with meta-analysis metrics.</td>
+              <td>763</td>
               <td><a href="https://github.com/dr-richard-barker/arabidopsis-gwas-spaceflight/raw/main/tables/gwas_de_overlap_genes.csv" download>Download CSV</a></td>
             </tr>
             <tr>
@@ -114,29 +86,29 @@
             <tr>
               <td><code>photorespiration_de_genes.csv</code></td>
               <td>Pathway Specific</td>
-              <td>56 photorespiration pathway genes showing 94.6% differential expression in spaceflight.</td>
-              <td>56</td>
+              <td>The 53 differentially expressed photorespiration genes (of 56 tested).</td>
+              <td>53</td>
               <td><a href="https://github.com/dr-richard-barker/arabidopsis-gwas-spaceflight/raw/main/tables/photorespiration_de_genes.csv" download>Download CSV</a></td>
             </tr>
             <tr>
               <td><code>ion_content_locus_sharing.csv</code></td>
-              <td>Ion Homeostasis</td>
-              <td>Sharing of the top 31 spaceflight SNP positions across 10 ionomic GWAS traits.</td>
-              <td>8</td>
+              <td>Chr4 Locus</td>
+              <td>How many of the 31 scoring SNP positions each of six AraGWAS traits shares: three ionome traits (Co59, As75, Mo98; none shared) and three LC-MS metabolite features (M216T665, M172T666, M130T666).</td>
+              <td>6</td>
               <td><a href="https://github.com/dr-richard-barker/arabidopsis-gwas-spaceflight/raw/main/tables/ion_content_locus_sharing.csv" download>Download CSV</a></td>
             </tr>
             <tr>
               <td><code>kg_nodes.csv</code></td>
               <td>Knowledge Graph</td>
-              <td>24,567 nodes (Genes, GO terms, Pathways, Traits, Ecotypes, Subcellular locations).</td>
-              <td>24,567</td>
+              <td>24,565 nodes (Genes, GO terms, Pathways, Traits, Ecotypes, Subcellular locations).</td>
+              <td>24,565</td>
               <td><a href="https://github.com/dr-richard-barker/arabidopsis-gwas-spaceflight/raw/main/data/knowledge_graph/kg_nodes.csv" download>Download CSV</a></td>
             </tr>
             <tr>
               <td><code>kg_edges.csv</code></td>
               <td>Knowledge Graph</td>
-              <td>92,906 typed edges interconnecting knowledge graph entities.</td>
-              <td>92,906</td>
+              <td>92,904 typed edges interconnecting knowledge graph entities.</td>
+              <td>92,904</td>
               <td><a href="https://github.com/dr-richard-barker/arabidopsis-gwas-spaceflight/raw/main/data/knowledge_graph/kg_edges.csv" download>Download CSV</a></td>
             </tr>
           </tbody>

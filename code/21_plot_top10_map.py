@@ -11,82 +11,25 @@ os.makedirs('tables', exist_ok=True)
 
 df_top10 = pd.read_csv('tables/top10_predicted_ecotypes.csv')
 
-# Add expanded phenotypic & physiological data
+# Flowering times are the 1001 Genomes FT10/FT16 values in AraPheno (phenotypes 261 and 262),
+# read 2026-10-13. Only accessions whose earlier profile quoted a value are filled; the rest are blank.
+# Habitat, ionome and morphology descriptions were removed on 2026-10-14: they had no source, and
+# two of the six quoted flowering times were wrong (Istisu-9 FT10, Xan-3 FT16).
 pheno_data = [
-    {
-        'rank': 1, 'name': 'Istisu-9', 'id': 9099, 'stock_id': 'CS76953',
-        'habitat': 'Thermal mineral springs / saline Caspian soil',
-        'flowering_habit': 'Late flowering (FT10 ~85d), strong vernalization requirement',
-        'ionomic_profile': 'High tissue S34 & Mo98 accumulation, elevated heavy metal tolerance',
-        'rosette_morphology': 'Compact prostrate rosette, high trichome density, dark anthocyanin pigmentation'
-    },
-    {
-        'rank': 2, 'name': 'Xan-3', 'id': 9067, 'stock_id': 'CS78860',
-        'habitat': 'Lowland Caspian semi-arid steppe (20m)',
-        'flowering_habit': 'Moderate-late flowering (FT16 ~68d), vernalization responsive',
-        'ionomic_profile': 'High Co59 & Zn66 sequestration, stress-induced ion transporter activity',
-        'rosette_morphology': 'Slightly serrated leaves, dense secondary branching, stress-resilient canopy'
-    },
-    {
-        'rank': 3, 'name': 'Xan-5', 'id': 9069, 'stock_id': 'CS78861',
-        'habitat': 'Lowland Caspian microclimate transition (20m)',
-        'flowering_habit': 'Intermediate flowering time, variable dormancy response',
-        'ionomic_profile': 'Enriched metal ion homeostasis alleles, robust vacuolar sequestration',
-        'rosette_morphology': 'Medium rosette diameter, high photosynthetic light harvesting efficiency'
-    },
-    {
-        'rank': 4, 'name': 'Lerik2-3', 'id': 9081, 'stock_id': 'CS77026',
-        'habitat': 'High-elevation Talysh Mountains (413m)',
-        'flowering_habit': 'Late flowering (FT10 ~92d), obligate cold requirement',
-        'ionomic_profile': 'Elevated S34, Se82 & Zn66 accumulation, high antioxidant enzyme capacity',
-        'rosette_morphology': 'Thick leaf lamina, high UV-B pigment shielding, compact mountain rosette'
-    },
-    {
-        'rank': 5, 'name': 'Anz-0', 'id': 9759, 'stock_id': 'CS76439',
-        'habitat': 'Depression basin / Coastal Anzali lagoon (-23m)',
-        'flowering_habit': 'Early-intermediate flowering (FT16 ~58.5d), low vernalization dependence',
-        'ionomic_profile': 'Extreme salinity tolerance, high Na+ exclusion & vacuolar K+/Na+ ratio',
-        'rosette_morphology': 'Broad fleshy leaves, high water-use efficiency (WUE), salt-gland analog cuticle'
-    },
-    {
-        'rank': 6, 'name': 'Oy-0', 'id': 7288, 'stock_id': 'CS77156',
-        'habitat': 'Fjordland subarctic coast (60.4°N, 49m)',
-        'flowering_habit': 'Late flowering (FT16 ~70.3d), strong long-day photoperiod sensitivity',
-        'ionomic_profile': 'Cold-adapted ion balance, high cellular Mg2+ and phosphate retention',
-        'rosette_morphology': 'Flattened rosette, dark green chlorophyll-dense leaves, cold acclimation ready'
-    },
-    {
-        'rank': 7, 'name': 'Ty-1', 'id': 5784, 'stock_id': 'CS78790',
-        'habitat': 'Scottish Highlands maritime upland (153m)',
-        'flowering_habit': 'Intermediate-late flowering, winter-annual habit',
-        'ionomic_profile': 'High Co59 & Mo98 transport efficiency under wet low-temp soils',
-        'rosette_morphology': 'Moderate rosette size, petiole elongation under shade/humidity'
-    },
-    {
-        'rank': 8, 'name': 'Mc-1', 'id': 5757, 'stock_id': 'CS78785',
-        'habitat': 'Pennine alpine moorland (596m)',
-        'flowering_habit': 'Very late flowering (FT10 ~87.8d), strong vernalization requirement',
-        'ionomic_profile': 'Heavy metal tolerance (Zn, Cd), high peat soil acid tolerance',
-        'rosette_morphology': 'Rugose leaves, dense rosette, high anthocyanin under cold/light stress'
-    },
-    {
-        'rank': 9, 'name': 'Sr:3', 'id': 6086, 'stock_id': 'CS77267',
-        'habitat': 'Bohuslän Baltic coastal granite island (17m)',
-        'flowering_habit': 'Late flowering, strong cold hardiness & freeze tolerance',
-        'ionomic_profile': 'High S34 & Mo98 accumulation, marine aerosol salt tolerance',
-        'rosette_morphology': 'Compact rosette, thick waxy cuticle, high stomatal density control'
-    },
-    {
-        'rank': 10, 'name': 'Monte-1', 'id': 9966, 'stock_id': 'CS76361',
-        'habitat': 'Apennine mountain slope (485m)',
-        'flowering_habit': 'Intermediate flowering time, drought avoidance strategy',
-        'ionomic_profile': 'High calcium (Ca2+) and metal ion balance on limestone soils',
-        'rosette_morphology': 'Narrow erect leaves, deep root architecture, high water stress tolerance'
-    }
+    {'rank': 1, 'name': 'Istisu-9', 'id': 9099, 'stock_id': 'CS76953', 'flowering_time': 'FT10 100.25 d'},
+    {'rank': 2, 'name': 'Xan-3', 'id': 9067, 'stock_id': 'CS78860', 'flowering_time': 'FT16 130 d'},
+    {'rank': 3, 'name': 'Xan-5', 'id': 9069, 'stock_id': 'CS78861', 'flowering_time': ''},
+    {'rank': 4, 'name': 'Lerik2-3', 'id': 9081, 'stock_id': 'CS77026', 'flowering_time': 'FT10 91.25 d'},
+    {'rank': 5, 'name': 'Anz-0', 'id': 9759, 'stock_id': 'CS76439', 'flowering_time': 'FT16 58.5 d'},
+    {'rank': 6, 'name': 'Oy-0', 'id': 7288, 'stock_id': 'CS77156', 'flowering_time': 'FT16 70.25 d'},
+    {'rank': 7, 'name': 'Ty-1', 'id': 5784, 'stock_id': 'CS78790', 'flowering_time': ''},
+    {'rank': 8, 'name': 'Mc-1', 'id': 5757, 'stock_id': 'CS78785', 'flowering_time': 'FT10 87.75 d'},
+    {'rank': 9, 'name': 'Sr:3', 'id': 6086, 'stock_id': 'CS77267', 'flowering_time': ''},
+    {'rank': 10, 'name': 'Monte-1', 'id': 9966, 'stock_id': 'CS76361', 'flowering_time': ''}
 ]
 
 df_pheno = pd.DataFrame(pheno_data)
-df_merged = pd.merge(df_top10, df_pheno[['rank', 'habitat', 'flowering_habit', 'ionomic_profile', 'rosette_morphology']], on='rank')
+df_merged = pd.merge(df_top10, df_pheno[['rank', 'flowering_time']], on='rank')
 df_merged.to_csv('tables/top10_phenotypic_profiles.csv', index=False)
 print("Saved tables/top10_phenotypic_profiles.csv")
 

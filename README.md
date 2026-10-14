@@ -13,11 +13,18 @@ This repository provides an integrated computational framework linking ground-ba
 
 ## 🌟 Key Findings
 
-1. **GWAS-Spaceflight Overlap:** Natural genetic variation underlying terrestrial stress adaptation and ion homeostasis strongly predicts spaceflight response sensitivity (763 overlap genes, **Odds Ratio = 4.23, $p = 4.45 \times 10^{-102}$**).
-2. **Chromosome 4 Pleiotropic Hotspot:** 29 of 31 top spaceflight-predictive SNPs (93.5%) co-localize with ion content GWAS QTLs on Chromosome 4 (positions `1,257,343` to `1,271,408`; spanning `AT4G02820` to `AT4G02860`).
-3. **Photorespiratory Stagnation Crisis:** Microgravity-induced absence of buoyancy convection leads to boundary layer gas stagnation, inducing **53 of 56 photorespiratory C2 cycle genes (94.6%)**.
-4. **Latitudinal Clinal Variation:** Predicted spaceflight response scores exhibit a statistically significant latitudinal gradient (Spearman $\rho = -0.125, p = 8.97 \times 10^{-5}$), structured primarily by population demographic history ($R^2 = 0.349$).
-5. **Linkage Disequilibrium Redundancy:** Linkage disequilibrium analysis across the Chr4 locus reveals an effective independent marker count $M_e = 4.2$ out of 29 SNPs, highlighting single-locus polygenic score constraints and motivating multi-chromosomal score expansion.
+1. **GWAS-Spaceflight Overlap:** Genes with Bonferroni-significant AraGWAS associations are enriched among spaceflight DEGs (763 overlap genes, **Odds Ratio = 4.23, $p = 4.45 \times 10^{-102}$**); 90 of 166 GWAS traits are individually enriched (FDR < 0.1), led by climate-adaptation and leaf ionome traits.
+2. **Chromosome 4 Metabolite Locus:** The 31 SNPs used for ecotype scoring are the 31 highest-scoring associations in the AraGWAS catalog, chosen on GWAS score alone. 29 of them lie in one 14 kb block on chromosome 4 (positions `1,257,343` to `1,271,408`; `AT4G02820` to `AT4G02860`) whose AraGWAS associations are with three LC-MS leaf metabolite features (M216T665, M172T666, M130T666), not with ionome traits.
+3. **Photorespiration Genes:** 53 of 56 photorespiration genes (94.6%) are differentially expressed in spaceflight.
+4. **Latitudinal Clinal Variation:** Predicted spaceflight response scores show a latitudinal gradient (Spearman $\rho = -0.125, p = 8.97 \times 10^{-5}$). A regression on population group, latitude and elevation explains 34.9% of score variance ($R^2 = 0.349$), with the population-group terms the largest.
+
+## ⚠️ Status: audited 14 Oct 2026
+
+An evidence audit (`/abai check`) found problems that have been corrected or flagged:
+
+- **Code for the core results is not in this repository.** Scripts 01–19 (data download, differential expression, meta-analysis, enrichment, machine learning, ecotype scoring, knowledge graph, geographic and altitude statistics) were run in a Biomni workspace and not retained. The results tables they produced are here, but cannot yet be regenerated from this repository. The archived Biomni plan and session notebook are in `execution_trace/`.
+- **Simulated and unsourced outputs were removed.** An earlier version published a synthetic accession map (old Fig. 6) and score distribution (old Fig. 4C); an LD matrix, Manhattan plot and "expanded" polygenic score generated from formulas or random numbers (old Figs 21, 23, 25 and their tables); a locus diagram with invented gene positions and hand-typed annotations (old Fig. 20); and an ion-enrichment figure that labelled metabolite features as cadmium (old Fig. 18). Unsourced habitat, ionome and morphology profiles for the top 10 accessions were also removed.
+- **Transcriptomic inputs need re-analysis.** Five of the 13 GeneLab studies are dark-grown BRIC experiments, and the meta-analysis table contains unmapped microarray row IDs and ERCC spike-ins. Open items are marked `TODO` in `manuscript/manuscript.tex`.
 
 ---
 
@@ -36,27 +43,17 @@ arabidopsis-gwas-spaceflight/
 │   ├── manuscript.tex
 │   └── references.bib
 │
-├── code/                              # Analytical scripts (01 to 20)
-│   ├── 01_download_gwas.py
-│   ├── 02_download_genelab.py
-│   ├── 03_differential_expression.R
-│   ├── 04_meta_analysis.R
-│   ├── 05_gwas_spaceflight_integration.py
-│   ├── 06_go_enrichment.R
-│   ├── 07_ml_gene_classifier.py
-│   ├── 08_ml_ecotype_prediction.py
-│   ├── 09_knowledge_graph.py
-│   ├── 11_figures.py
-│   ├── 13_geo_altitude_data.py
-│   ├── 14_geo_visualizations.py
-│   ├── 15_altitude_biomarker_stats.py
-│   ├── 16_biomarker_visualizations.py
-│   └── 20_extended_analyses.py        # Q1-Q8 Extended follow-up analyses
+├── code/                              # Scripts 20-27 (01-19 not in this repository; see Status)
+│   ├── 20_extended_analyses.py        # Latitude/geographic plots (Figs 22, 24, 26, 27) + power table
+│   ├── 21_plot_top10_map.py           # Fig 28 top-10 map + top10_phenotypic_profiles.csv
+│   ├── 22-26_*.py                     # Earlier Fig 28 variants; their terrain panels are synthetic, not for publication
+│   └── 27_generate_dashboard_static_charts.py  # Figs 29-30
 │
-├── figures/                           # 27 publication figures (PNG & SVG)
-├── tables/                            # 25 processed data CSV & JSON files
+├── execution_trace/                   # Archived 28 Aug 2026 Biomni plan and session notebook
+├── figures/                           # 24 figures (PNG, most also SVG)
+├── tables/                            # 27 processed data CSV & JSON files
 ├── data/
-│   └── knowledge_graph/               # Cytoscape.js & GraphML graph files
+│   └── knowledge_graph/               # Cytoscape.js JSON and node/edge CSV files
 └── docs/                              # Interactive GitHub Pages website
 ```
 
@@ -65,13 +62,13 @@ arabidopsis-gwas-spaceflight/
 ## 🚀 Interactive GitHub Pages Website
 
 The project is hosted interactively via GitHub Pages in the `docs/` directory:
-- **Interactive Results Gallery:** Meta-analysis, GWAS overlap, ML, geographic clines, Chr4 shared locus, and power calculations.
-- **Figure Browser:** High-resolution view of all 27 publication figures.
-- **Data Downloads:** Schema documentation and download links for all 25 CSV data tables.
+- **Interactive Results Gallery:** Meta-analysis, GWAS overlap, ML, geographic clines, the chromosome 4 locus, and power calculations.
+- **Figure Browser:** The main and geographic figures.
+- **Data Downloads:** Descriptions and download links for the main data tables.
 
 ---
 
-## 💻 Quickstart & Reproducibility
+## 💻 Quickstart
 
 ### Conda Environment
 ```bash
@@ -79,9 +76,9 @@ conda env create -f environment.yml
 conda activate arabidopsis-gwas-spaceflight
 ```
 
-### Run Pipeline & Extended Analyses
+### Run the Extended Analyses
 ```bash
-# Run extended follow-up analyses (Q1 - Q8)
+# Latitude/geographic plots and power table, from tables/ecotype_prediction_geo.csv
 python code/20_extended_analyses.py
 ```
 
