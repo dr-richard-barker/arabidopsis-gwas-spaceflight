@@ -6,12 +6,14 @@ import scipy.stats as stats
 import statsmodels.api as sm
 import matplotlib
 matplotlib.use('Agg')
+matplotlib.rcParams['svg.hashsalt'] = 'arabidopsis-gwas-spaceflight'  # reproducible SVG ids
 import matplotlib.pyplot as plt
 import seaborn as sns
 
 # Create directories if needed
 os.makedirs('tables', exist_ok=True)
 os.makedirs('figures', exist_ok=True)
+os.makedirs('docs/assets', exist_ok=True)
 
 # Extended analyses on the 982-accession table (tables/ecotype_prediction_geo.csv).
 #
@@ -40,14 +42,17 @@ print("Processing Q3 & Q7: Clinal and Geographic Visualizations...")
 # Figure 22: Clinal Latitude Gradient Map / Scatter
 fig, ax = plt.subplots(figsize=(10, 6))
 sns.scatterplot(data=ecotype_geo, x='latitude', y='predicted_response_score', hue='group', style='group', palette='tab10', alpha=0.8, s=40, ax=ax)
-sns.regplot(data=ecotype_geo, x='latitude', y='predicted_response_score', scatter=False, ax=ax, line_kws={'color':'black', 'linestyle':'--', 'lw':2})
+sns.regplot(data=ecotype_geo, x='latitude', y='predicted_response_score', scatter=False, ax=ax, seed=42, line_kws={'color':'black', 'linestyle':'--', 'lw':2})
 ax.set_xlabel('Latitude (°N)', fontsize=12, fontweight='bold')
 ax.set_ylabel('Predicted Spaceflight Response Score', fontsize=12, fontweight='bold')
-ax.set_title('Clinal Variation of Predicted Spaceflight Response Score Along Latitudinal Gradients', fontsize=13, fontweight='bold')
-plt.legend(bbox_to_anchor=(1.05, 1), loc='upper left', frameon=True)
+lat_pairs = ecotype_geo[['latitude', 'predicted_response_score']].dropna()
+rho_lat, p_lat = stats.spearmanr(lat_pairs['latitude'], lat_pairs['predicted_response_score'])
+ax.set_title(f'Predicted Spaceflight Response Score vs Latitude\n(Spearman rho = {rho_lat:.3f}, p = {p_lat:.1e}, n = {len(lat_pairs)})', fontsize=13, fontweight='bold')
+plt.legend(bbox_to_anchor=(1.02, 1), loc='upper left', frameon=True, title='Population group')
 plt.tight_layout()
-plt.savefig('figures/fig22_clinal_latitude_gradient.png', dpi=300)
-plt.savefig('figures/fig22_clinal_latitude_gradient.svg')
+plt.savefig('figures/fig22_clinal_latitude_gradient.png', dpi=300, bbox_inches='tight')
+plt.savefig('figures/fig22_clinal_latitude_gradient.svg', bbox_inches='tight')
+plt.savefig('docs/assets/fig22_clinal_latitude_gradient.png', dpi=300, bbox_inches='tight')
 plt.close()
 
 # Figure 24: Europe Score Heatmap
@@ -60,8 +65,9 @@ ax.set_xlabel('Longitude (°E)', fontsize=11, fontweight='bold')
 ax.set_ylabel('Latitude (°N)', fontsize=11, fontweight='bold')
 ax.set_title('Spatial Density & Score Heatmap Across European Sampling Sites', fontsize=12, fontweight='bold')
 plt.tight_layout()
-plt.savefig('figures/fig24_europe_score_heatmap.png', dpi=300)
-plt.savefig('figures/fig24_europe_score_heatmap.svg')
+plt.savefig('figures/fig24_europe_score_heatmap.png', dpi=300, bbox_inches='tight')
+plt.savefig('figures/fig24_europe_score_heatmap.svg', bbox_inches='tight')
+plt.savefig('docs/assets/fig24_europe_score_heatmap.png', dpi=300, bbox_inches='tight')
 plt.close()
 
 # Figure 26: Spatial Surface Plot
@@ -72,8 +78,9 @@ ax.set_xlabel('Longitude', fontsize=11, fontweight='bold')
 ax.set_ylabel('Latitude', fontsize=11, fontweight='bold')
 ax.set_title('Global Distribution of Predicted Spaceflight Response Scores (982 Accessions)', fontsize=12, fontweight='bold')
 plt.tight_layout()
-plt.savefig('figures/fig26_score_geographic_surface.png', dpi=300)
-plt.savefig('figures/fig26_score_geographic_surface.svg')
+plt.savefig('figures/fig26_score_geographic_surface.png', dpi=300, bbox_inches='tight')
+plt.savefig('figures/fig26_score_geographic_surface.svg', bbox_inches='tight')
+plt.savefig('docs/assets/fig26_score_geographic_surface.png', dpi=300, bbox_inches='tight')
 plt.close()
 
 # Figure 27: Population Group Violin Plot
@@ -84,8 +91,9 @@ ax.set_xlabel('Population Group (1001 Genomes)', fontsize=11, fontweight='bold')
 ax.set_ylabel('Predicted Spaceflight Response Score', fontsize=11, fontweight='bold')
 ax.set_title('Predicted Spaceflight Response Score Stratification Across 10 Population Groups', fontsize=13, fontweight='bold')
 plt.tight_layout()
-plt.savefig('figures/fig27_population_violin.png', dpi=300)
-plt.savefig('figures/fig27_population_violin.svg')
+plt.savefig('figures/fig27_population_violin.png', dpi=300, bbox_inches='tight')
+plt.savefig('figures/fig27_population_violin.svg', bbox_inches='tight')
+plt.savefig('docs/assets/fig27_population_violin.png', dpi=300, bbox_inches='tight')
 plt.close()
 
 # ----------------------------------------------------
@@ -111,6 +119,18 @@ for n in n_samples:
             'approx_power': min(max(power, 0.05), 1.0),
             'note': 'Current ecotype transcriptomics subset (n=4)' if n == 4 else ('Full accessions dataset (n=982)' if n == 982 else '')
         })
+
+# Power at the observed latitude-score correlation, with the same approximation.
+n, r = len(lat_pairs), abs(rho_lat)
+t_stat = r * np.sqrt((n - 2) / (1 - r**2))
+power = 1 - stats.t.cdf(stats.t.ppf(0.975, df=n - 2) - t_stat, df=n - 2)
+power_results.append({
+    'sample_size_n': n,
+    'effect_size_r': round(r, 4),
+    'approx_power': power,
+    'note': 'Observed |Spearman rho|, latitude vs predicted score'
+})
+print(f"Power at the observed |rho| = {r:.3f}, n = {n}: {power:.3f}")
 
 df_power = pd.DataFrame(power_results)
 df_power.to_csv('tables/power_analysis_results.csv', index=False)

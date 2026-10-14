@@ -20,3 +20,4 @@ sample_size_n,effect_size_r,approx_power,note
 982,0.2,0.9999947029922933,Full accessions dataset (n=982)
 982,0.5,1.0,Full accessions dataset (n=982)
 982,0.8,1.0,Full accessions dataset (n=982)
+980,0.1248,0.9754937082032854,"Observed |Spearman rho|, latitude vs predicted score"

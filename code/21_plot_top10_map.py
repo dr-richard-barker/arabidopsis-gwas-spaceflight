@@ -3,6 +3,7 @@ import pandas as pd
 import numpy as np
 import matplotlib
 matplotlib.use('Agg')
+matplotlib.rcParams['svg.hashsalt'] = 'arabidopsis-gwas-spaceflight'  # reproducible SVG ids
 import matplotlib.pyplot as plt
 import seaborn as sns
 
@@ -11,25 +12,11 @@ os.makedirs('tables', exist_ok=True)
 
 df_top10 = pd.read_csv('tables/top10_predicted_ecotypes.csv')
 
-# Flowering times are the 1001 Genomes FT10/FT16 values in AraPheno (phenotypes 261 and 262),
-# read 2026-10-13. Only accessions whose earlier profile quoted a value are filled; the rest are blank.
-# Habitat, ionome and morphology descriptions were removed on 2026-10-14: they had no source, and
-# two of the six quoted flowering times were wrong (Istisu-9 FT10, Xan-3 FT16).
-pheno_data = [
-    {'rank': 1, 'name': 'Istisu-9', 'id': 9099, 'stock_id': 'CS76953', 'flowering_time': 'FT10 100.25 d'},
-    {'rank': 2, 'name': 'Xan-3', 'id': 9067, 'stock_id': 'CS78860', 'flowering_time': 'FT16 130 d'},
-    {'rank': 3, 'name': 'Xan-5', 'id': 9069, 'stock_id': 'CS78861', 'flowering_time': ''},
-    {'rank': 4, 'name': 'Lerik2-3', 'id': 9081, 'stock_id': 'CS77026', 'flowering_time': 'FT10 91.25 d'},
-    {'rank': 5, 'name': 'Anz-0', 'id': 9759, 'stock_id': 'CS76439', 'flowering_time': 'FT16 58.5 d'},
-    {'rank': 6, 'name': 'Oy-0', 'id': 7288, 'stock_id': 'CS77156', 'flowering_time': 'FT16 70.25 d'},
-    {'rank': 7, 'name': 'Ty-1', 'id': 5784, 'stock_id': 'CS78790', 'flowering_time': ''},
-    {'rank': 8, 'name': 'Mc-1', 'id': 5757, 'stock_id': 'CS78785', 'flowering_time': 'FT10 87.75 d'},
-    {'rank': 9, 'name': 'Sr:3', 'id': 6086, 'stock_id': 'CS77267', 'flowering_time': ''},
-    {'rank': 10, 'name': 'Monte-1', 'id': 9966, 'stock_id': 'CS76361', 'flowering_time': ''}
-]
-
-df_pheno = pd.DataFrame(pheno_data)
-df_merged = pd.merge(df_top10, df_pheno[['rank', 'flowering_time']], on='rank')
+# Flowering times (FT10/FT16, days) come from AraPheno via 32_arapheno_flowering_times.py.
+# Habitat, ionome and morphology descriptions were removed on 2026-10-14: they had no source.
+df_ft = pd.read_csv('tables/top10_flowering_times.csv')
+assert (df_ft['accession_id'].to_numpy() == df_top10['accession_id'].to_numpy()).all()
+df_merged = pd.merge(df_top10, df_ft[['rank', 'FT10_days', 'FT16_days']], on='rank')
 df_merged.to_csv('tables/top10_phenotypic_profiles.csv', index=False)
 print("Saved tables/top10_phenotypic_profiles.csv")
 

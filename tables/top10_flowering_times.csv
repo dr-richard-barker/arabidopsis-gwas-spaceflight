@@ -1,0 +1,11 @@
+rank,name,accession_id,CS_number,FT10_days,FT16_days,source
+1,Istisu-9,9099,CS76953,100.25,112.6666667,"AraPheno phenotypes 261 (FT10) and 262 (FT16), 1001 Genomes; blank = not phenotyped"
+2,Xan-3,9067,CS78860,101.75,130.0,"AraPheno phenotypes 261 (FT10) and 262 (FT16), 1001 Genomes; blank = not phenotyped"
+3,Xan-5,9069,CS78861,82.75,90.75,"AraPheno phenotypes 261 (FT10) and 262 (FT16), 1001 Genomes; blank = not phenotyped"
+4,Lerik2-3,9081,CS77026,91.25,99.66666667,"AraPheno phenotypes 261 (FT10) and 262 (FT16), 1001 Genomes; blank = not phenotyped"
+5,Anz-0,9759,CS76439,61.5,58.5,"AraPheno phenotypes 261 (FT10) and 262 (FT16), 1001 Genomes; blank = not phenotyped"
+6,Oy-0,7288,CS77156,82.5,70.25,"AraPheno phenotypes 261 (FT10) and 262 (FT16), 1001 Genomes; blank = not phenotyped"
+7,Ty-1,5784,CS78790,101.75,69.25,"AraPheno phenotypes 261 (FT10) and 262 (FT16), 1001 Genomes; blank = not phenotyped"
+8,Mc-1,5757,CS78785,87.75,66.66666667,"AraPheno phenotypes 261 (FT10) and 262 (FT16), 1001 Genomes; blank = not phenotyped"
+9,Sr:3,6086,CS77267,100.5,100.75,"AraPheno phenotypes 261 (FT10) and 262 (FT16), 1001 Genomes; blank = not phenotyped"
+10,Monte-1,9966,CS76361,90.5,80.0,"AraPheno phenotypes 261 (FT10) and 262 (FT16), 1001 Genomes; blank = not phenotyped"

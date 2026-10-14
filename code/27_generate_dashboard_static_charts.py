@@ -31,28 +31,31 @@ plt.savefig('docs/assets/fig29_score_bar_plot.png', dpi=300)
 plt.close()
 
 # 2. Scatter Plot: Latitude vs Elevation
-fig, ax = plt.subplots(figsize=(10, 5))
+fig, ax = plt.subplots(figsize=(11, 6))
 scatter = ax.scatter(df['latitude'], df['elevation_m'], c=df['predicted_response_score'], cmap='viridis', s=200, edgecolors='black', linewidth=1.5, zorder=5)
 cbar = plt.colorbar(scatter, ax=ax)
 cbar.set_label('Predicted Response Score', fontweight='bold')
 
-label_offsets = {
-    'Istisu-9': (-1.5, 25), 'Xan-3': (-1.5, -35), 'Xan-5': (0.8, -35),
-    'Lerik2-3': (0.8, 25), 'Anz-0': (0.8, -35), 'Oy-0': (-1.5, 25),
-    'Ty-1': (-1.5, 25), 'Mc-1': (-1.5, -35), 'Sr:3': (0.8, 25), 'Monte-1': (-1.5, -35)
+# Accessions at identical coordinates (Xan-3 and Xan-5) share one label.
+# Label positions are fixed in data coordinates so that no two labels overlap.
+label_pos = {
+    'Monte-1': (43.0, 570), 'Lerik2-3': (34.8, 540), 'Istisu-9': (43.0, 200),
+    'Xan-3': (43.0, -70), 'Anz-0': (34.8, -150),
+    'Mc-1': (51.0, 690), 'Ty-1': (52.5, 300), 'Sr:3': (56.0, -150), 'Oy-0': (61.0, 230),
 }
-
-for i, row in df.iterrows():
-    xo, yo = label_offsets.get(row['name'], (0.5, 10))
-    ax.annotate(f"#{row['rank']} {row['name']}", (row['latitude'], row['elevation_m']),
-                xytext=(row['latitude'] + xo, row['elevation_m'] + yo),
+for (lat, elev), grp in df.groupby(['latitude', 'elevation_m'], sort=False):
+    label = ' / '.join(f"#{r} {n}" for r, n in zip(grp['rank'], grp['name']))
+    tx, ty = label_pos[grp['name'].iloc[0]]
+    ax.annotate(label, (lat, elev), xytext=(tx, ty), ha='center', va='center',
                 fontsize=9, fontweight='bold',
-                bbox=dict(boxstyle='round,pad=0.2', facecolor='white', alpha=0.85, edgecolor='gray'),
+                bbox=dict(boxstyle='round,pad=0.2', facecolor='white', alpha=0.9, edgecolor='gray'),
                 arrowprops=dict(arrowstyle='->', lw=1, color='gray'), zorder=10)
 
+ax.set_xlim(32, 64)
+ax.set_ylim(-230, 780)
 ax.set_xlabel('Latitude (°N)', fontsize=11, fontweight='bold')
 ax.set_ylabel('Elevation (m)', fontsize=11, fontweight='bold')
-ax.set_title('Latitudinal (°N) & Altitudinal (m) Distribution of Top 10 Accessions', fontsize=12, fontweight='bold')
+ax.set_title('Latitude and Elevation of the Top 10 Accessions', fontsize=12, fontweight='bold')
 ax.grid(True, linestyle=':', alpha=0.5)
 
 plt.tight_layout()
