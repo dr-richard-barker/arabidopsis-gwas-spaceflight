@@ -5,8 +5,8 @@ type: software
 authors:
   - given-names: Richard
     family-names: Barker
-    orcid: "https://orcid.org/0000-0002-4525-3341"
-    affiliation: "Phylo"
+    orcid: "https://orcid.org/0000-0001-5681-9857"
+    affiliation: "Collaborative Science Environment Inc."
 keywords:
   - Arabidopsis thaliana
   - GWAS
@@ -27,7 +27,7 @@ preferred-citation:
   authors:
     - given-names: Richard
       family-names: Barker
-      orcid: "https://orcid.org/0000-0002-4525-3341"
+      orcid: "https://orcid.org/0000-0001-5681-9857"
   journal: "npj Microgravity"
   year: 2026
   doi: "10.1038/s41526-026-XXXXX-X"
