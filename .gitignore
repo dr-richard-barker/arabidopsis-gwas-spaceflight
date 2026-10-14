@@ -50,3 +50,6 @@ wheels/
 
 # Large cache
 .cache/
+
+# ABAI attestation (local record of /abai check; not published)
+.abai/
