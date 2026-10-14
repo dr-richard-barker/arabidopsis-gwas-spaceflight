@@ -53,7 +53,7 @@
       <img src="assets/fig4_ml_results.png" alt="Figure 4">
       <div class="figure-caption">
         <h4>Figure 4: Machine Learning Classifier Performance</h4>
-        <p>(A) Random forest feature importances and (B) ROC curve (AUC = 0.999). The features include the Fisher and meta-analysis statistics that define the consensus label, so the AUC reflects recovery of the labelling rule, not independent predictive performance.</p>
+        <p>(A) Random forest feature importances and (B) ROC curve (AUC = 0.999), both recomputed from the committed classifier tables. The features include the Fisher and meta-analysis statistics that define the consensus label, so the AUC reflects recovery of the labelling rule, not independent predictive performance. (C) Distribution of the 982 predicted ecotype scores; 694 accessions share the same score (0.641). Script: <code>code/29_fig4_ml_results.py</code>.</p>
       </div>
     </div>
 
@@ -79,7 +79,7 @@
       <img src="assets/fig15_europe_map.png" alt="Figure 15">
       <div class="figure-caption">
         <h4>Figure 15: European Latitudinal & Altitudinal Sampling Density</h4>
-        <p>High-density regional map over Europe displaying predicted spaceflight response tier classifications.</p>
+        <p>The 770 accessions in the European box (35&ndash;72&deg;N, 15&deg;W&ndash;45&deg;E): marker shape shows the predicted category, colour the predicted score. Script: <code>code/33_fig15_europe_map.py</code>.</p>
       </div>
     </div>
 
@@ -101,6 +101,13 @@
 
 
     <div class="figure-card">
+      <img src="assets/fig18_ionome_enrichment.png" alt="Figure 18">
+      <div class="figure-caption">
+        <h4>Figure 18: Leaf Ionome GWAS Genes Among Spaceflight DEGs</h4>
+        <p>(A) Fold enrichment of each trait's GWAS genes among spaceflight DEGs. Pooled over the six ICP-MS ionome traits, 41 of 49 genes are DE (fold enrichment 1.92, one-sided Fisher p = 8.0e-9). The three LC-MS metabolite features and At2 (bacterial resistance) are shown separately; they are not ion traits. (B) How many of the 31 scoring SNPs each trait shares. Script: <code>code/30_ionome_enrichment.py</code>.</p>
+      </div>
+    </div>
+    <div class="figure-card">
       <img src="assets/fig19_photorespiration_heatmap.png" alt="Figure 19">
       <div class="figure-caption">
         <h4>Figure 19: Photorespiratory C2 Cycle Expression Heatmap</h4>
@@ -120,6 +127,13 @@
     </div>
 
 
+    <div class="figure-card">
+      <img src="assets/fig23_chr4_aragwas_window.png" alt="Figure 23">
+      <div class="figure-caption">
+        <h4>Figure 23: Chromosome 4 Window in the AraGWAS Catalog</h4>
+        <p>Every association stored in AraGWAS (&minus;log<sub>10</sub> p &ge; 4) between 1.20 and 1.32 Mb for the three LC-MS metabolite-feature studies and the cobalt, molybdenum and arsenic studies; grey lines mark the 29 scoring SNPs, and genes are from the AraGWAS gene database. The scoring SNPs are metabolite-feature hits; arsenic, cobalt and molybdenum associations sit at neighbouring SNPs. Script: <code>code/31_chr4_aragwas_window.py</code>.</p>
+      </div>
+    </div>
     <div class="figure-card">
       <img src="assets/fig24_europe_score_heatmap.png" alt="Figure 24">
       <div class="figure-caption">

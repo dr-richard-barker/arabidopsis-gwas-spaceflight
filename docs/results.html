@@ -48,9 +48,10 @@
       <!-- Tab 2: GWAS Overlap -->
       <div class="tab-content" id="tab-gwas">
         <h2>AraGWAS Catalog Overlap & Trait Enrichment</h2>
-        <p>Integrating 462 AraGWAS studies (1,523,262 Bonferroni-significant associations across 279 phenotypes) revealed that GWAS candidate genes are strongly enriched among spaceflight DEGs (<strong>763 overlap genes, OR = 4.23, p = 4.45e-102</strong>). 90 GWAS phenotypes were significantly enriched, led by climate adaptation and leaf ionome traits (molybdenum, cobalt, sulfur).</p>
+        <p>Integrating 462 AraGWAS studies (1,523,262 Bonferroni-significant associations across 279 phenotypes) revealed that GWAS candidate genes are strongly enriched among spaceflight DEGs (<strong>763 overlap genes, OR = 4.23, p = 4.45e-102</strong>). 90 GWAS phenotypes were significantly enriched, led by climate adaptation and leaf ionome traits (molybdenum, cobalt, sulfur). Pooled over six ionome traits, 41 of 49 genes are differentially expressed (fold enrichment 1.92, one-sided Fisher p = 8.0e-9).</p>
         <div class="grid">
           <img src="assets/fig3_integration.png" alt="GWAS Integration" style="width:100%; border-radius:6px;">
+          <img src="assets/fig18_ionome_enrichment.png" alt="Ionome GWAS genes among spaceflight DEGs" style="width:100%; border-radius:6px;">
         </div>
       </div>
 
@@ -210,13 +211,16 @@
       <!-- Tab 5: Chr4 Shared Locus -->
       <div class="tab-content" id="tab-chr4">
         <h2>Chromosome 4 Locus</h2>
-        <p>The 31 SNPs used for ecotype scoring are the 31 highest-scoring associations in the AraGWAS catalog, selected on GWAS score alone. Twenty-nine lie in a 14 kb block on chromosome 4 (positions 1,257,343&ndash;1,271,408; <code>AT4G02820</code> to <code>AT4G02860</code>). In AraGWAS, all 29 positions are associated with three LC-MS leaf metabolite features (M216T665, M172T666, M130T666), not with ionome traits: none is shared with Co59, As75 or Mo98 (<code>ion_content_locus_sharing.csv</code>). The ecotype scores therefore rest largely on one metabolite-associated locus.</p>
+        <p>The 31 SNPs used for ecotype scoring are the 31 highest-scoring associations in the AraGWAS catalog, selected on GWAS score alone. Twenty-nine lie in a 14 kb block on chromosome 4 (positions 1,257,343&ndash;1,271,408; <code>AT4G02820</code> to <code>AT4G02860</code>). At those 29 SNPs the AraGWAS associations are with three LC-MS leaf metabolite features (M216T665, M172T666, M130T666); none is shared with an ionome trait (<code>ion_content_locus_sharing.csv</code>). The same block also carries Bonferroni-significant ionome associations at neighbouring SNPs: arsenic (&minus;log<sub>10</sub> p up to 40), cobalt and molybdenum. The ecotype scores rest largely on this one block, and nothing in these data links it to spaceflight response.</p>
+        <div class="grid">
+          <img src="assets/fig23_chr4_aragwas_window.png" alt="Chromosome 4 window in AraGWAS" style="width:100%; border-radius:6px;">
+        </div>
       </div>
 
       <!-- Tab 6: Extended Window & Power -->
       <div class="tab-content" id="tab-extended">
         <h2>Statistical Power (Q4)</h2>
-        <p>With only four ecotypes (n = 4) having both spaceflight transcriptomic data and geographic coordinates, correlations between elevation and transcriptomic responses are badly underpowered (<code>power_analysis_results.csv</code>).</p>
+        <p>With only four ecotypes (n = 4) having both spaceflight transcriptomic data and geographic coordinates, correlations between elevation and transcriptomic responses are badly underpowered. For the latitude gradient, the 980 accessions with coordinates give approximately 0.98 power at the observed |&rho;| = 0.125 (<code>power_analysis_results.csv</code>).</p>
       </div>
     </div>
   </div>

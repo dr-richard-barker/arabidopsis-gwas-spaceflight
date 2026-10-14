@@ -64,7 +64,7 @@
     <div class="card">
       <h2>Key Scientific Discoveries</h2>
       <ul>
-        <li><strong>Chromosome 4 Metabolite Locus (AT4G02820–AT4G02860):</strong> 29 of the 31 SNPs used for ecotype scoring, chosen as the highest-scoring associations in the AraGWAS catalog, lie in one 14 kb block associated with three LC-MS leaf metabolite features. The ecotype scores therefore rest largely on a single locus; it is not an ion-homeostasis locus.</li>
+        <li><strong>Chromosome 4 Locus (AT4G02820–AT4G02860):</strong> 29 of the 31 SNPs used for ecotype scoring, chosen as the highest-scoring associations in the AraGWAS catalog, lie in one 14 kb block. At those SNPs the associations are with three LC-MS leaf metabolite features; arsenic, cobalt and molybdenum associations sit at neighbouring SNPs in the same block. The ecotype scores rest largely on this one block, and nothing here links it to spaceflight response.</li>
         <li><strong>Photorespiration Genes:</strong> 53 of 56 photorespiration genes (94.6%) are differentially expressed in spaceflight. Altered gas exchange around leaves in microgravity is one hypothesis for this; it was not tested here.</li>
         <li><strong>Latitudinal Clinal Variation:</strong> Predicted spaceflight response scores exhibit a statistically significant latitudinal gradient (Spearman &rho; = -0.125, p = 8.97e-5), with northern accessions showing lower response distinctness.</li>
         <li><strong>Demographic Population Stratification:</strong> a regression on population group, latitude and elevation explains 34.9% of score variance; Asian accessions score lowest, and Spanish, relict and North Swedish accessions highest.</li>
@@ -85,7 +85,7 @@
         <a href="https://github.com/dr-richard-barker/arabidopsis-gwas-spaceflight/raw/main/tables/top10_phenotypic_profiles.csv" download style="display:inline-block; background-color:var(--accent-color); color:white; padding:0.6rem 1.2rem; border-radius:6px; text-decoration:none; font-weight:600; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">📥 Download <code>top10_phenotypic_profiles.csv</code></a>
       </div>
 
-      <p style="font-size:0.9rem; color:var(--text-muted);">Flowering times are the 1001 Genomes FT10/FT16 values in AraPheno (phenotypes 261 and 262). Habitat, ionome and morphology descriptions shown here earlier had no source and have been removed.</p>
+      <p style="font-size:0.9rem; color:var(--text-muted);">Flowering times are the 1001 Genomes FT10/FT16 values in AraPheno (phenotypes 261 and 262; days to flowering at 10 and 16&nbsp;&deg;C), fetched by <code>code/32_arapheno_flowering_times.py</code>. Habitat, ionome and morphology descriptions shown here earlier had no source and have been removed.</p>
       <div class="table-responsive">
         <table>
           <thead>
@@ -96,7 +96,7 @@
               <th>Origin / Group</th>
               <th>Elevation (m)</th>
               <th>Chr4 Alt. Hom. SNPs</th>
-              <th>Flowering Time (AraPheno)</th>
+              <th>Flowering Time (AraPheno FT10 / FT16)</th>
               <th>Score (Percentile)</th>
             </tr>
           </thead>
@@ -108,7 +108,7 @@
               <td>AZE<br><small>Italy/Balkan/Caucasus</small></td>
               <td>101</td>
               <td>29 / 29</td>
-              <td>FT10 100.25 d</td>
+              <td>FT10 100.25 d / FT16 112.67 d</td>
               <td><strong>0.653</strong><br><small>(99.6%)</small></td>
             </tr>
             <tr>
@@ -118,7 +118,7 @@
               <td>AZE<br><small>Italy/Balkan/Caucasus</small></td>
               <td>20</td>
               <td>29 / 29</td>
-              <td>FT16 130 d</td>
+              <td>FT10 101.75 d / FT16 130 d</td>
               <td><strong>0.653</strong><br><small>(99.6%)</small></td>
             </tr>
             <tr>
@@ -128,7 +128,7 @@
               <td>AZE<br><small>Italy/Balkan/Caucasus</small></td>
               <td>20</td>
               <td>5 / 29</td>
-              <td>&mdash;</td>
+              <td>FT10 82.75 d / FT16 90.75 d</td>
               <td><strong>0.653</strong><br><small>(99.6%)</small></td>
             </tr>
             <tr>
@@ -138,7 +138,7 @@
               <td>AZE<br><small>Italy/Balkan/Caucasus</small></td>
               <td>413</td>
               <td>29 / 29</td>
-              <td>FT10 91.25 d</td>
+              <td>FT10 91.25 d / FT16 99.67 d</td>
               <td><strong>0.653</strong><br><small>(99.6%)</small></td>
             </tr>
             <tr>
@@ -148,7 +148,7 @@
               <td>IRN<br><small>Italy/Balkan/Caucasus</small></td>
               <td>-23</td>
               <td>29 / 29</td>
-              <td>FT16 58.5 d</td>
+              <td>FT10 61.5 d / FT16 58.5 d</td>
               <td><strong>0.653</strong><br><small>(99.6%)</small></td>
             </tr>
             <tr>
@@ -158,7 +158,7 @@
               <td>NOR<br><small>Admixed</small></td>
               <td>49</td>
               <td>29 / 29</td>
-              <td>FT16 70.25 d</td>
+              <td>FT10 82.5 d / FT16 70.25 d</td>
               <td><strong>0.653</strong><br><small>(99.6%)</small></td>
             </tr>
             <tr>
@@ -168,7 +168,7 @@
               <td>UK<br><small>Admixed</small></td>
               <td>153</td>
               <td>29 / 29</td>
-              <td>&mdash;</td>
+              <td>FT10 101.75 d / FT16 69.25 d</td>
               <td><strong>0.653</strong><br><small>(99.6%)</small></td>
             </tr>
             <tr>
@@ -178,7 +178,7 @@
               <td>UK<br><small>Admixed</small></td>
               <td>596</td>
               <td>2 / 29</td>
-              <td>FT10 87.75 d</td>
+              <td>FT10 87.75 d / FT16 66.67 d</td>
               <td><strong>0.653</strong><br><small>(99.6%)</small></td>
             </tr>
             <tr>
@@ -188,7 +188,7 @@
               <td>SWE<br><small>Admixed</small></td>
               <td>17</td>
               <td>29 / 29</td>
-              <td>&mdash;</td>
+              <td>FT10 100.5 d / FT16 100.75 d</td>
               <td><strong>0.642</strong><br><small>(99.2%)</small></td>
             </tr>
             <tr>
@@ -198,7 +198,7 @@
               <td>ITA<br><small>Italy/Balkan/Caucasus</small></td>
               <td>485</td>
               <td>29 / 29</td>
-              <td>&mdash;</td>
+              <td>FT10 90.5 d / FT16 80 d</td>
               <td><strong>0.641</strong><br><small>(99.0%)</small></td>
             </tr>
           </tbody>
