@@ -85,7 +85,7 @@ plt.close()
 
 # Figure 27: Population Group Violin Plot
 fig, ax = plt.subplots(figsize=(12, 6))
-sns.violinplot(data=ecotype_geo, x='group', y='predicted_response_score', palette='Set2', ax=ax, inner='quartile')
+sns.violinplot(data=ecotype_geo, x='group', y='predicted_response_score', hue='group', legend=False, palette='Set2', ax=ax, inner='quartile', cut=0)  # cut=0: no density beyond the data
 ax.set_xticklabels(ax.get_xticklabels(), rotation=45, ha='right', fontsize=10, fontweight='bold')
 ax.set_xlabel('Population Group (1001 Genomes)', fontsize=11, fontweight='bold')
 ax.set_ylabel('Predicted Spaceflight Response Score', fontsize=11, fontweight='bold')
