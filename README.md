@@ -45,8 +45,9 @@ arabidopsis-gwas-spaceflight/
 │
 ├── code/                              # Scripts 20-27 (01-19 not in this repository; see Status)
 │   ├── 20_extended_analyses.py        # Latitude/geographic plots (Figs 22, 24, 26, 27) + power table
-│   ├── 21_plot_top10_map.py           # Fig 28 top-10 map + top10_phenotypic_profiles.csv
-│   ├── 22-26_*.py                     # Earlier Fig 28 variants; their terrain panels are synthetic, not for publication
+│   ├── 21_plot_top10_map.py           # top10_phenotypic_profiles.csv (also draws a draft Fig 28)
+│   ├── 22-25_*.py                     # Earlier Fig 28 variants with synthetic terrain, not for publication
+│   ├── 26_atlas_political_fig28.py    # Fig 28 = its panel B (Natural Earth map), cropped; its panel A terrain is synthetic
 │   └── 27_generate_dashboard_static_charts.py  # Figs 29-30
 │
 ├── execution_trace/                   # Archived 28 Aug 2026 Biomni plan and session notebook

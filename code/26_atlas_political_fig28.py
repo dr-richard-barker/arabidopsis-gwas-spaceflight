@@ -1,3 +1,9 @@
+# Figure 28 as committed (14 Oct 2026) is panel B of this script's output, cropped from the
+# PNG (pixels x 3502-7130, y 0-2000 at 300 dpi) and from the SVG (panel A and legend groups removed).
+# Panel A is NOT real data: its elevation grid is hand-placed Gaussian blobs and its isotherms
+# and isohyets are formulas of latitude. Panel B uses Natural Earth 50 m country polygons and the
+# 1001 Genomes coordinates in tables/top10_predicted_ecotypes.csv.
+
 import os
 import numpy as np
 import pandas as pd
